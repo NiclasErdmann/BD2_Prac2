@@ -5,7 +5,7 @@ COLONIAFELINA(#idColonia, nombre, descripción, coordenadas, lugarReferencia, nu
 
 GATO(#idGato, numXIP, descripción, foto, idCementerio)
 
-HISTORIAL(#idHistorial, fechaLLegada, fechaIda, idGato, idColonia)
+albirament(#idalbirament, fechaLLegada, fechaIda, idGato, idColonia)
 
 INCIDENCIAGATO(#idIncidencia, fecha, descripción, tipo, idVoluntario)
 
@@ -104,10 +104,10 @@ CREATE TABLE Gato (
 );
 
 -- -------------------------
--- HISTORIAL
+-- albirament
 -- -------------------------
-CREATE TABLE Historial (
-    idHistorial INT PRIMARY KEY,
+CREATE TABLE ALBIRAMENT (
+    idalbirament INT PRIMARY KEY,
     fechaLlegada DATE NOT NULL,
     fechaIda DATE,
     idGato INT NOT NULL,
