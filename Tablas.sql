@@ -1,6 +1,3 @@
-Chorizo
-
-
 /*
 MODELO RELACIONAL
 
