@@ -65,6 +65,8 @@ CREATE TABLE GrupoTrabajo (
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     idAyuntamiento INT NOT NULL,
+
+    CONSTRAINT FK_GrupTrabajo_Ayuntamiento
     FOREIGN KEY (idAyuntamiento) REFERENCES Ayuntamiento(idAyuntamiento)
 );
 
@@ -79,6 +81,8 @@ CREATE TABLE ColoniaFelina (
     lugarReferencia VARCHAR(200),
     numeroGatos INT,
     idGrupoTrabajo INT NOT NULL,
+
+    CONSTRAINT FK_ColoniaFelina_GrupoTrabajo
     FOREIGN KEY (idGrupoTrabajo) REFERENCES GrupoTrabajo(idGrupoTrabajo)
 );
 
