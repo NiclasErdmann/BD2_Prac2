@@ -34,11 +34,8 @@ CREATE TABLE Persona (
     idPersona INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100),
     apellido VARCHAR(100),
-    usuario VARCHAR(60) UNIQUE,
-    contraseña VARCHAR(200),
-    idRol INT,
-    CONSTRAINT FK_Persona_Rol
-        FOREIGN KEY (idRol) REFERENCES Rol(idRol)
+    email VARCHAR(150),
+    telefono VARCHAR(20)
 );
 
 -- ===========================
@@ -69,17 +66,20 @@ CREATE TABLE GrupoTrabajo (
 -- ===========================
 CREATE TABLE Voluntario (
     idVoluntario INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(150) UNIQUE,
-    telefono VARCHAR(20),
+    usuario VARCHAR(60) UNIQUE,
+    contraseña VARCHAR(200),
     idGrupoTrabajo INT,
     idAyuntamiento INT NOT NULL,
     idPersona INT NOT NULL,
+    idRol INT,
     CONSTRAINT FK_Voluntario_GrupoTrabajo
         FOREIGN KEY (idGrupoTrabajo) REFERENCES GrupoTrabajo(idGrupoTrabajo),
     CONSTRAINT FK_Voluntario_Ayuntamiento
         FOREIGN KEY (idAyuntamiento) REFERENCES Ayuntamiento(idAyuntamiento),
     CONSTRAINT FK_ColoniaFelina_Persona
-        FOREIGN KEY (idPersona) REFERENCES Persona(idPersona)
+        FOREIGN KEY (idPersona) REFERENCES Persona(idPersona),
+    CONSTRAINT FK_Voluntario_Rol
+        FOREIGN KEY (idRol) REFERENCES Rol(idRol)
 );
 
 
@@ -198,10 +198,13 @@ CREATE TABLE Profesional (
     activo BOOLEAN DEFAULT TRUE,
     idPersona INT NOT NULL,
     idCentroVet INT NOt NULL,
+    idRol INT,
     CONSTRAINT FK_Profesional_Persona
         FOREIGN KEY (idPersona) REFERENCES Persona(idPersona),
     CONSTRAINT FK_Profesional_CentroVeterinario
-        FOREIGN KEY (idCentroVet) REFERENCES CentroVeterinario(idCentroVet)
+        FOREIGN KEY (idCentroVet) REFERENCES CentroVeterinario(idCentroVet),
+    CONSTRAINT FK_Profesional_Rol
+        FOREIGN KEY (idRol) REFERENCES Rol(idRol)
 );
 
 -- ===========================
