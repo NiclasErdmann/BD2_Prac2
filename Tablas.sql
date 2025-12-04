@@ -170,27 +170,6 @@ CREATE TABLE MarcaComida (
 );
 
 -- ===========================
---            TRABAJO
--- revisar
--- ===========================
-CREATE TABLE Trabajo (
-    idTrabajo INT PRIMARY KEY AUTO_INCREMENT,
-    descripcion TEXT,
-    fecha DATE,
-    hora TIME,
-    estado VARCHAR(50),
-    idMarcaComida INT,
-    idColoniaFelina INT,
-    idVoluntario INT,
-    CONSTRAINT FK_Trabajo_MarcaComida
-        FOREIGN KEY (idMarcaComida) REFERENCES MarcaComida(idMarcaComida),
-    CONSTRAINT FK_Trabajo_ColoniaFelina
-        FOREIGN KEY (idColoniaFelina) REFERENCES ColoniaFelina(idColoniaFelina),
-    CONSTRAINT FK_Trabajo_Voluntario
-        FOREIGN KEY (idVoluntario) REFERENCES Voluntario(idVoluntario)
-);
-
--- ===========================
 --          TIPO (Campaña Intervenciaon)
 -- ===========================
 CREATE TABLE Tipo (
@@ -259,17 +238,26 @@ CREATE TABLE Participa (
 );
 
 -- ===========================
---     ACCIÓN INDIVIDUAL
+--            TRABAJO
 -- revisar
 -- ===========================
-CREATE TABLE AccionIndividual (
-    idAccion INT PRIMARY KEY AUTO_INCREMENT,
-    fecha DATE,
+CREATE TABLE Trabajo (
+    idTrabajo INT PRIMARY KEY AUTO_INCREMENT,
     descripcion TEXT,
-    autopsia BOOLEAN,
-    comentario TEXT,
+    fecha DATE,
+    hora TIME,
+    estado VARCHAR(50),
+    idMarcaComida INT,
+    idColoniaFelina INT,
+    idVoluntario INT,
     idGato INT,
     idProfesional INT,
+    CONSTRAINT FK_Trabajo_MarcaComida
+        FOREIGN KEY (idMarcaComida) REFERENCES MarcaComida(idMarcaComida),
+    CONSTRAINT FK_Trabajo_ColoniaFelina
+        FOREIGN KEY (idColoniaFelina) REFERENCES ColoniaFelina(idColoniaFelina),
+    CONSTRAINT FK_Trabajo_Voluntario
+        FOREIGN KEY (idVoluntario) REFERENCES Voluntario(idVoluntario),
     CONSTRAINT FK_AccionIndividual_Gato
         FOREIGN KEY (idGato) REFERENCES Gato(idGato),
     CONSTRAINT FK_AccionIndividual_Profesional
