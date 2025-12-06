@@ -1,0 +1,34 @@
+<html>
+<body>
+    <h2>Mis Colonias (Ayuntamiento)</h2>
+    <a href="form_colonias.html">Crear Nueva Colonia</a>
+    <br><br>
+
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Ubicación</th>
+            <th>Número de Gatos</th>
+        </tr>
+
+        <?php
+        // Se asume que $resultado trae las colonias FILTRADAS por el ayuntamiento logueado
+        while($fila = $resultado->fetch_assoc()) {
+            echo "<tr>";
+            
+            // 1. EL NOMBRE AHORA ES UN ENLACE
+            // Al hacer clic, enviamos el 'idColoniaFelina' a la página de información
+            echo "<td><a href='info_colonia.php?id=" . $fila['idColoniaFelina'] . "'>" . $fila['nombre'] . "</a></td>";
+            
+            // 2. Ubicación (Lugar de Referencia)
+            echo "<td>" . $fila['lugarReferencia'] . "</td>";
+            
+            // 3. Número de Gatos (Asegúrate de pedir este campo en tu SELECT SQL)
+            echo "<td>" . $fila['numeroGatos'] . "</td>";
+            
+            echo "</tr>";
+        }
+        ?>
+    </table>
+</body>
+</html>
