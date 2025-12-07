@@ -4,7 +4,7 @@ $user= $_GET["user"];
 $pasword= $_GET["password"];
 // preparar select per descarregar tots els privilegis de l usuari
 $con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"db2_prac2");
+$db = mysqli_select_db($con,"bd2_prac2");
 
 /*
 $consulta= "select titol,enlace 
@@ -17,12 +17,15 @@ where usuari.username='".$user."'";
 
 
 
-$consulta=" select funciones.nombre as nombre
-                from voluntario v
-                join rol on v.idRol = rol.idRol
-                join PuedeHacer on PuedeHacer.idRol=rol.idRol
-                join funciones on funciones.idFunciones = PuedeHacer.idFunciones
-            where v.usuario='".$user."' AND v.contraseña='".$password."'";
+$consulta=" SELECT f.nombre as nombre
+                FROM PERSONA p
+                LEFT JOIN VOLUNTARIO v ON p.idPersona = v.idPersona
+                LEFT JOIN ADMINAYU a ON p.idPersona = a.idPersona
+                JOIN PER_ROL pr ON p.idPersona = pr.idPersona
+                JOIN ROL r ON pr.idRol = r.idRol
+                JOIN PUEDEHACER ph ON r.idRol = ph.idRol
+                JOIN FUNCION f ON ph.idFuncion = f.idFuncion
+            WHERE p.usuario='".$user."' AND p.contrasena='".$pasword."'";
 
 $resultat = mysqli_query($con, $consulta);
 

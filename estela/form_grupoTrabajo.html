@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Grupo de Trabajo</title>
+</head>
+<body>
+
+    <h2>Crear Nuevo Grupo de Trabajo</h2>
+
+    <form action="guardar_grupo.php" method="POST">
+        
+        <label for="nombre">Nombre del Grupo:</label><br>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Grupo Zona Norte"><br><br>
+
+        <label for="descripcion">Descripción:</label><br>
+        <textarea id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Describe la zona de actuación o notas importantes..."></textarea><br><br>
+
+        <label for="idResponsable">Asignar Responsable:</label><br>
+        <select id="idResponsable" name="idResponsable" required>
+            <option value="">-- Selecciona un Responsable --</option>
+            
+            <option value="15">Maria García (Responsable)</option>
+            <option value="22">Pep Lluís Martí (Responsable)</option>
+            <option value="34">Ana Torres (Responsable)</option>
+            </select>
+        <br><br>
+
+        <button type="submit">Guardar Grupo</button>
+        <a href="lista_grupoTrabajo.html">Cancelar</a>
+
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Grupo de Trabajo</title>
+</head>
+<body>
+
+    <a href="lista_grupoTrabajo.html">⬅ Volver a la lista de Grupos</a>
+    <hr>
+
+    <h1>Grupo Zona Norte</h1>
+
+    <table border="0" width="100%">
+        <tr>
+            <td width="50%" valign="top">
+                <h3>Descripción:</h3>
+                <p>
+                    Grupo encargado de la gestión y alimentación de las colonias situadas 
+                    en la parte norte del municipio, incluyendo el parque forestal.
+                </p>
+            </td>
+            <td width="50%" valign="top">
+                <div style="background-color: #e3f2fd; padding: 15px; border: 1px solid #90caf9;">
+                    <h3 style="margin-top: 0;">👤 Responsable del Grupo:</h3>
+                    <h2>María García</h2>
+                    <small>Tel: 666-555-444</small> </div>
+            </td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th width="50%">🏠 Colonias Asignadas</th>
+                <th width="50%">👥 Voluntarios Miembros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <ul>
+                        <li><a href="info_colonia.php?id=1">Colonia El Puerto</a></li>
+                        <li><a href="info_colonia.php?id=5">Colonia Sa Riera</a></li>
+                        <li><a href="info_colonia.php?id=8">Colonia Mercado</a></li>
+                    </ul>
+                    
+                    <br>
+                    <small><a href="asignar_colonia.php?idGrupo=1">[+ Asignar otra colonia]</a></small>
+                </td>
+
+                <td valign="top">
+                    <ul>
+                        <li>Juan Pérez</li>
+                        <li>Ana Torres</li>
+                        <li>Pedro Mas</li>
+                        <li>Lucía Gomila</li>
+                    </ul>
+                    
+                    <br>
+                    <small><a href="asignar_miembro.php?idGrupo=1">[+ Añadir Voluntario]</a></small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <form action="form_grupo.php" method="GET">
+        <input type="hidden" name="id" value="1">
+        <button type="submit" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            ✏ Editar Datos del Grupo / Cambiar Responsable
+        </button>
+    </form>
+
+</body>
+</html>

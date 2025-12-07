@@ -14,7 +14,7 @@ CREATE TABLE PERSONA(
     nombre VARCHAR(200) NOT NULL,
     apellido VARCHAR(200),
     usuario VARCHAR(200),
-    contraseña VARCHAR(200),
+    contrasena VARCHAR(200),
     email VARCHAR(200),
     telefono VARCHAR(100)
 );
