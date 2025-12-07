@@ -7,12 +7,32 @@ if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
 
+// Helper: verifica si el usuario tiene una función asignada
+function usuarioPuede($con, $idPersona, $funcionNombre) {
+    $sqlPerm = "SELECT 1
+                FROM PER_ROL pr
+                JOIN PUEDEHACER ph ON pr.idRol = ph.idRol
+                JOIN FUNCION f ON ph.idFuncion = f.idFuncion
+                WHERE pr.idPersona = ? AND LOWER(f.nombre) = LOWER(?)
+                LIMIT 1";
+
+    $stmtPerm = mysqli_prepare($con, $sqlPerm);
+    mysqli_stmt_bind_param($stmtPerm, 'is', $idPersona, $funcionNombre);
+    mysqli_stmt_execute($stmtPerm);
+    $resPerm = mysqli_stmt_get_result($stmtPerm);
+    $has = ($resPerm && mysqli_num_rows($resPerm) > 0);
+    mysqli_stmt_close($stmtPerm);
+    return $has;
+}
+
 // Obtener idAyuntamiento desde la sesión (guardado en login.php)
 if (!isset($_SESSION['idAyuntamiento']) || empty($_SESSION['idAyuntamiento'])) {
     die('Error: no se detectó ayuntamiento en la sesión. Por favor inicia sesión correctamente.');
 }
 
 $idAyuntamiento = (int) $_SESSION['idAyuntamiento'];
+$idPersona = isset($_SESSION['idPersona']) ? (int) $_SESSION['idPersona'] : 0;
+$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'modificar Colonia') : false;
 
 // Consultar colonias del ayuntamiento
 $query = "SELECT idColonia, nombre, lugarReferencia, numeroGatos
@@ -57,9 +77,11 @@ if (!$resultado) {
 </head>
 <body>
     <h2>Mis Colonias (Ayuntamiento)</h2>
-        <a href="crearColonia.php">
-        <button>Crear Nueva Colonia</button>
-    </a>
+    <?php if ($puedeModificar): ?>
+        <a href="formularioCrear_Colonias.php">
+            <button>Crear Nueva Colonia</button>
+        </a>
+    <?php endif; ?>
     <br><br>
 
     <table>

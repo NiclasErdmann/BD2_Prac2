@@ -1,6 +1,24 @@
 <?php
 session_start();
 
+// Helper: verifica si el usuario tiene una función asignada
+function usuarioPuede($con, $idPersona, $funcionNombre) {
+    $sqlPerm = "SELECT 1
+                FROM PER_ROL pr
+                JOIN PUEDEHACER ph ON pr.idRol = ph.idRol
+                JOIN FUNCION f ON ph.idFuncion = f.idFuncion
+                WHERE pr.idPersona = ? AND LOWER(f.nombre) = LOWER(?)
+                LIMIT 1";
+
+    $stmtPerm = mysqli_prepare($con, $sqlPerm);
+    mysqli_stmt_bind_param($stmtPerm, 'is', $idPersona, $funcionNombre);
+    mysqli_stmt_execute($stmtPerm);
+    $resPerm = mysqli_stmt_get_result($stmtPerm);
+    $has = ($resPerm && mysqli_num_rows($resPerm) > 0);
+    mysqli_stmt_close($stmtPerm);
+    return $has;
+}
+
 // Obtener id desde GET
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($id <= 0) {
@@ -12,6 +30,9 @@ $con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
+
+$idPersona = isset($_SESSION['idPersona']) ? (int) $_SESSION['idPersona'] : 0;
+$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'modificar Colonia') : false;
 
 // Consulta: obtener datos de la colonia y nombre del grupo (si existe)
 $sql = "SELECT c.idColonia, c.nombre, c.descripcion, c.coordenadas, c.lugarReferencia, c.numeroGatos,
@@ -93,9 +114,11 @@ $resCats = mysqli_stmt_get_result($stmt2);
             <?php endif; ?>
         </div>
 
-        <p style="margin-top:16px;">
-            <a class="button" href="form_colonias.php?id=<?php echo (int)$colonia['idColonia']; ?>">✏ Editar colonia</a>
-        </p>
+        <?php if ($puedeModificar): ?>
+            <p style="margin-top:16px;">
+                <a class="button" href="formularioEditar_Colonias.php?id=<?php echo (int)$colonia['idColonia']; ?>">✏ Editar colonia</a>
+            </p>
+        <?php endif; ?>
 
         <hr>
         <h3>Gatos en esta colonia</h3>

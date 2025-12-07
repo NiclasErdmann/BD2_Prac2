@@ -1,12 +1,18 @@
 <?php
-// 1. INICIAR SESIÓN Y CONEXIÓN
-$con = mysqli_connect("localhost","root","");
-$db= mysqli_select_db($con,"BD2_Prac2");
-$idAyuntamiento = $con['idAyuntamiento'];
+session_start();
+$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+if (!$con) {
+    die('Error de conexión: ' . mysqli_connect_error());
+}
 
-// 2. CONSULTA SQL DINÁMICA
-// Usamos LEFT JOIN para obtener el nombre del responsable.
-// Si no usamos LEFT JOIN y el grupo no tiene responsable, el grupo no aparecería.
+// Obtener el idAyuntamiento desde la sesión
+$idAyuntamiento = $_SESSION['idAyuntamiento'] ?? null;
+if (!$idAyuntamiento) {
+    echo '<h2>No se ha encontrado el ayuntamiento en la sesión.</h2>';
+    exit;
+}
+
+// Consulta para obtener los grupos de trabajo del ayuntamiento
 $sql = "SELECT 
             G.idGrupoTrabajo, 
             G.nombre AS nombreGrupo, 
@@ -17,10 +23,10 @@ $sql = "SELECT
         LEFT JOIN PERSONA P ON V.idPersona = P.idPersona
         WHERE G.idAyuntamiento = ?";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $idAyuntamiento);
-$stmt->execute();
-$resultado = $stmt->get_result();
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, "i", $idAyuntamiento);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 ?>
 
 <!DOCTYPE html>

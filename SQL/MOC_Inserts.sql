@@ -6,7 +6,17 @@ INSERT INTO AYUNTAMIENTO (nombre) VALUES
 INSERT INTO PERSONA (nombre, apellido, usuario, contrasena, email, telefono) VALUES
     ('Ana', 'Martinez', 'ana.admin', 'passAdmin', 'ana@cuenca.es', '600111222'),
     ('Juan', 'Lopez', 'juan.vol', 'passJuan', 'juan@cuenca.es', '600222333'),
-    ('Maria', 'Perez', 'maria.vet', 'passMaria', 'maria@cuenca.es', '600333444');
+    ('Maria', 'Perez', 'maria.vet', 'passMaria', 'maria@cuenca.es', '600333444'),
+    ('Carlos', 'Rodríguez', 'carlos.resp', 'passCarlos', 'carlos@cuenca.es', '600444555'),
+    ('Laura', 'González', 'laura.resp', 'passLaura', 'laura@cuenca.es', '600555666'),
+    ('Miguel', 'Sánchez', 'miguel.vol1', 'passMiguel', 'miguel1@cuenca.es', '600666777'),
+    ('Isabel', 'García', 'isabel.vol1', 'passIsabel', 'isabel1@cuenca.es', '600777888'),
+    ('Pedro', 'Fernández', 'pedro.vol1', 'passPedro', 'pedro1@cuenca.es', '600888999'),
+    ('Sofia', 'Ruiz', 'sofia.vol1', 'passSofia', 'sofia1@cuenca.es', '600999111'),
+    ('David', 'Morales', 'david.vol2', 'passDavid', 'david2@cuenca.es', '601111222'),
+    ('Elena', 'Castro', 'elena.vol2', 'passElena', 'elena2@cuenca.es', '601222333'),
+    ('Roberto', 'Jiménez', 'roberto.vol2', 'passRoberto', 'roberto2@cuenca.es', '601333444'),
+    ('Patricia', 'Vargas', 'patricia.vol2', 'passPatricia', 'patricia2@cuenca.es', '601444555');
 
 INSERT INTO GRUPO_TRABAJO (nombre, descripcion, idResponsable, idAyuntamiento) VALUES
     ('Grupo Centro', 'Colonias del casco antiguo', NULL, 1),
@@ -14,7 +24,20 @@ INSERT INTO GRUPO_TRABAJO (nombre, descripcion, idResponsable, idAyuntamiento) V
 
 INSERT INTO VOLUNTARIO (idAyuntamiento, idGrupoTrabajo, idPersona) VALUES
     (1, 1, 2),
-    (1, 2, 3);
+    (1, 2, 3),
+    (1, 1, 4),
+    (1, 2, 5),
+    (1, 1, 6),
+    (1, 1, 7),
+    (1, 1, 8),
+    (1, 1, 9),
+    (1, 2, 10),
+    (1, 2, 11),
+    (1, 2, 12),
+    (1, 2, 13);
+
+UPDATE GRUPO_TRABAJO SET idResponsable = 3 WHERE idGrupoTrabajo = 1;
+UPDATE GRUPO_TRABAJO SET idResponsable = 4 WHERE idGrupoTrabajo = 2;
 
 INSERT INTO ADMINAYU (idAyuntamiento, idPersona) VALUES
     (1, 1);
@@ -42,19 +65,30 @@ INSERT INTO INCIDENCIA (fecha, descripcion, tipo, idVoluntario, idGato) VALUES
 
 INSERT INTO ROL (nombre) VALUES
     ('adminAyuntamiento'),
+    ('responsableGrupo'),
     ('voluntario');
 
 INSERT INTO FUNCION (nombre, ruta) VALUES
-    ('Crear Colonia', 'estela/crearColonia.html'),
+    ('Modificar Colonias', 'estela/crearColonia.html'),
     ('Ver Colonias', 'estela/listar_colonias.html'),
-    ('Gestionar Grupos', 'estela/lista_grupoTrabajo.php'),
+    ('Gestionar Grupos', 'estela/listar_grupoTrabajo.php'),
     ('Registrar Incidencia', 'AÑADIR RUTA AQUÍ'),
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),
     (2, 2),
-    (3, 2);
+    (3, 2),
+    (4, 2),
+    (5, 2),
+    (6, 3),
+    (7, 3),
+    (8, 3),
+    (9, 3),
+    (10, 3),
+    (11, 3),
+    (12, 3),
+    (13, 3);
 
 INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     (1, 1),
