@@ -86,7 +86,7 @@ if (!$resultado) {
     </table>
 
     <br><br>
-    <a href="../login.html">Volver al menu</a>
+    <a href="../menu.php">Volver al menú</a>
 </body>
 </html>
 

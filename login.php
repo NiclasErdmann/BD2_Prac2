@@ -57,37 +57,8 @@ if ($resAyu && mysqli_num_rows($resAyu) > 0) {
     $_SESSION['idAyuntamiento'] = null;
 }
 
-// 3) Obtener funciones asociadas al usuario (vía sus roles)
-$sqlFuncs = sprintf("SELECT f.nombre, f.ruta
-    FROM PER_ROL pr
-    JOIN ROL r ON pr.idRol = r.idRol
-    JOIN PUEDEHACER ph ON r.idRol = ph.idRol
-    JOIN FUNCION f ON ph.idFuncion = f.idFuncion
-    WHERE pr.idPersona = %d",
-    (int)$idPersona
-);
-
-$resFuncs = mysqli_query($con, $sqlFuncs);
-
-echo "<h2>Bienvenido " . htmlspecialchars($_SESSION['nombre']) . "</h2>";
-echo "<p>Páginas disponibles:</p>";
-
-if ($resFuncs && mysqli_num_rows($resFuncs) > 0) {
-    while ($f = mysqli_fetch_assoc($resFuncs)) {
-        // Si ruta no existe en BD, construir una ruta simple a partir del nombre
-        $ruta = !empty($f['ruta']) ? $f['ruta'] : 'estela/' . strtolower(str_replace(' ', '_', $f['nombre'])) . '.php';
-        // Si la ruta apunta a .html pero existe la versión .php, usarla
-        if (substr($ruta, -5) === '.html') {
-            $possiblePhp = substr($ruta, 0, -5) . '.php';
-            if (file_exists(__DIR__ . '/' . $possiblePhp)) {
-                $ruta = $possiblePhp;
-            }
-        }
-        echo '<a href="' . htmlspecialchars($ruta) . '">' . htmlspecialchars($f['nombre']) . '</a><br>';
-    }
-} else {
-    echo '<p>(No hay funciones asignadas)</p>';
-}
-
+// Redirigir al menú principal (menu.php) donde se muestran las funciones
 mysqli_close($con);
+header('Location: menu.php');
+exit;
 ?>
