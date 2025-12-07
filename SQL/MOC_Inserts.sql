@@ -19,8 +19,8 @@ INSERT INTO PERSONA (nombre, apellido, usuario, contrasena, email, telefono) VAL
     ('Patricia', 'Vargas', 'patricia.vol2', 'passPatricia', 'patricia2@cuenca.es', '601444555');
 
 INSERT INTO GRUPO_TRABAJO (nombre, descripcion, idResponsable, idAyuntamiento) VALUES
-    ('Grupo Centro', 'Colonias del casco antiguo', NULL, 1),
-    ('Grupo Parques', 'Zonas verdes y parques', NULL, 1);
+    ('Grupo Centro', 'Colonias del casco antiguo', 3, 1),
+    ('Grupo Parques', 'Zonas verdes y parques', 4, 1);
 
 INSERT INTO VOLUNTARIO (idAyuntamiento, idGrupoTrabajo, idPersona) VALUES
     (1, 1, 2),
@@ -36,8 +36,6 @@ INSERT INTO VOLUNTARIO (idAyuntamiento, idGrupoTrabajo, idPersona) VALUES
     (1, 2, 12),
     (1, 2, 13);
 
-UPDATE GRUPO_TRABAJO SET idResponsable = 3 WHERE idGrupoTrabajo = 1;
-UPDATE GRUPO_TRABAJO SET idResponsable = 4 WHERE idGrupoTrabajo = 2;
 
 INSERT INTO ADMINAYU (idAyuntamiento, idPersona) VALUES
     (1, 1);
