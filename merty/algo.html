@@ -1,0 +1,36 @@
+<html>
+
+<body>
+    <h2>Nueva Incidencia</h2>
+
+    <form action="generar_incidencia.php">
+
+        <label>Fecha:</label><br>
+        <input name="fecha" type="date"><br><br>
+
+        <label>Descripcion:</label><br>
+        <textarea name="descripcion"></textarea><br><br>
+
+        <label>Tipo de Incidencia:</label><br>
+        <select name="tipo">
+            <option value="salud">Problema de salud</option>
+            <option value="herido">Herida</option>
+            <option value="fallecimiento">Fallecimiento</option>
+            <option value="otro">Otro</option>
+        </select><br><br>
+
+        <label>Colonia:</label><br>
+        <select name="colonia">
+            <option value="Colonia Ejemplo 1">Colonia Ejemplo 1</option>
+            <option value="Colonia Ejemplo 2">Colonia Ejemplo 2</option>
+        </select><br><br>
+
+        <label>Nombre del Gato:</label><br>
+        <input name="nombreGato" type="text"><br><br>
+
+        <input type="submit" value="Registrar Incidencia">
+
+    </form>
+</body>
+
+</html>
