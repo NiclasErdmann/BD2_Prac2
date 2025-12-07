@@ -6,12 +6,13 @@ $role= $_GET["role"];
 $con = mysqli_connect("localhost","root","");
 $db = mysqli_select_db($con,"bd2_prac2");
 
-$consulta=" select funciones.nombre as nombre
-                from voluntario v
-                join rol on v.idRol = rol.idRol
-                join PuedeHacer on PuedeHacer.idRol=rol.idRol
-                join funciones on funciones.idFunciones = PuedeHacer.idFunciones
-            where v.usuario='".$user."' AND v.contraseña='".$contraseña."'";
+$consulta=" SELECT f.nombre as nombre
+                FROM PERSONA p
+                JOIN PER_ROL pr ON p.idPersona = pr.idPersona
+                JOIN ROL r ON pr.idRol = r.idRol
+                JOIN PUEDEHACER ph ON r.idRol = ph.idRol
+                JOIN FUNCION f ON ph.idFuncion = f.idFuncion
+            WHERE p.usuario='".$user."' AND r.nombre='".$role."'";
 
 $resultat = mysqli_query($con, $consulta);
 

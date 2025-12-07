@@ -17,7 +17,7 @@ where usuari.username='".$user."'";
 
 
 
-$consulta=" SELECT f.nombre as nombre
+$consulta=" SELECT f.nombre as nombre, f.ruta as ruta
                 FROM PERSONA p
                 LEFT JOIN VOLUNTARIO v ON p.idPersona = v.idPersona
                 LEFT JOIN ADMINAYU a ON p.idPersona = a.idPersona
@@ -29,16 +29,17 @@ $consulta=" SELECT f.nombre as nombre
 
 $resultat = mysqli_query($con, $consulta);
 
-$registre = mysqli_fetch_array($resultat);
-if(is_null($registre)){
-    // incorrect username or pasword
-    $cad= 'Incorrect Usename or Password';
+if(mysqli_num_rows($resultat) == 0){
+    // incorrect username or password
+    $cad= 'Incorrect Username or Password';
     echo $cad;
 }else{
     // "loged in"
+    echo "<h2>Bienvenido $user</h2>";
+    echo "<p>Páginas disponibles:</p>";
     
     while ($registre=mysqli_fetch_array($resultat)) {
-        $cad= '<a href="'.$registre["nombre"].'">'."asdasds".'</a><br>';
+        $cad= '<a href="'.$registre["ruta"].'">'.$registre["nombre"].'</a><br>';
         echo $cad;
     }
 }

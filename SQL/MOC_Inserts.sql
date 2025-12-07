@@ -44,12 +44,12 @@ INSERT INTO ROL (nombre) VALUES
     ('adminAyuntamiento'),
     ('voluntario');
 
-INSERT INTO FUNCION (nombre) VALUES
-    ('crearColonia'),
-    ('verColonias'),
-    ('gestionarGrupos'),
-    ('registrarIncidencia'),
-    ('planificarTrabajo');
+INSERT INTO FUNCION (nombre, ruta) VALUES
+    ('Crear Colonia', 'estela/crearColonia.html'),
+    ('Ver Colonias', 'estela/listar_colonias.html'),
+    ('Gestionar Grupos', 'estela/lista_grupoTrabajo.php'),
+    ('Registrar Incidencia', 'AÑADIR RUTA AQUÍ'),
+    ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),

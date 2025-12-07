@@ -142,7 +142,8 @@ CREATE TABLE ROL(
 -- ============================================================
 CREATE TABLE FUNCION(
     idFuncion INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(200)
+    nombre VARCHAR(200),
+    ruta VARCHAR(300)
 );
 
 -- ============================================================
