@@ -1,24 +1,68 @@
-<html>
+<?php
+session_start();
+
+// Requiere sesión con idAyuntamiento (iniciada en login.php)
+if (!isset($_SESSION['idAyuntamiento'])) {
+        echo "<p>Error: debes iniciar sesión antes de crear una colonia.</p>";
+        echo "<p><a href=\"../login.php\">Ir al login</a></p>";
+        exit;
+}
+
+$idAyu = (int) $_SESSION['idAyuntamiento'];
+
+// Conectar a la BD y traer los grupos del ayuntamiento para el desplegable
+$con = mysqli_connect('localhost','root','','BD2_Prac2');
+if (!$con) die('Error de conexión: ' . mysqli_connect_error());
+
+$sql = "SELECT idGrupoTrabajo, nombre FROM GRUPO_TRABAJO WHERE idAyuntamiento = ? ORDER BY nombre";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, 'i', $idAyu);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Crear Colonia</title>
+    <style>label{display:block;margin-top:8px;}input,select,textarea{width:100%;max-width:500px;padding:6px}</style>
+</head>
 <body>
     <h2>Nueva Colonia</h2>
-    <form action="colonias_guardar.php">
-        
-        <label>Nombre de la Colonia:</label><br>
-        <input name="nombre" type="text"><br><br>
+    <form method="post" action="colonias_guardar.php">
+        <label for="nombre">Nombre de la Colonia:</label>
+        <input id="nombre" name="nombre" type="text" required>
 
-        <label>Lugar de Referencia (Ubicación):</label><br>
-        <input name="lugarReferencia" type="text"><br><br>
+        <label for="lugarReferencia">Lugar de Referencia (Ubicación):</label>
+        <input id="lugarReferencia" name="lugarReferencia" type="text">
 
-        <label>Coordenadas (GPS):</label><br>
-        <input name="coordenadas" type="text"><br><br>
+        <label for="coordenadas">Coordenadas (GPS):</label>
+        <input id="coordenadas" name="coordenadas" type="text" placeholder="lat,lon">
 
-        <label>Número de Gatos (Estimado):</label><br>
-        <input name="numeroGatos" type="number"><br><br>
+        <label for="numeroGatos">Número de Gatos (Estimado):</label>
+        <input id="numeroGatos" name="numeroGatos" type="number" min="0" value="0">
 
-        <label>Descripción / Comentarios:</label><br>
-        <textarea name="descripcion"></textarea><br><br>
+        <label for="idGrupo">Asignar Grupo de Trabajo:</label>
+        <select id="idGrupo" name="idGrupo">
+            <option value="">-- Ninguno --</option>
+            <?php while($g = mysqli_fetch_assoc($res)): ?>
+                <option value="<?= (int)$g['idGrupoTrabajo'] ?>"><?= htmlspecialchars($g['nombre']) ?></option>
+            <?php endwhile; ?>
+        </select>
 
-        <input type="submit" value="Guardar Colonia">
+        <label for="descripcion">Descripción / Comentarios:</label>
+        <textarea id="descripcion" name="descripcion" rows="5"></textarea>
+
+        <br>
+        <button type="submit">Guardar Colonia</button>
     </form>
+
+    <p><a href="listar_colonias.php">← Volver al listado</a></p>
+
+<?php
+mysqli_stmt_close($stmt);
+mysqli_close($con);
+?>
 </body>
 </html>
