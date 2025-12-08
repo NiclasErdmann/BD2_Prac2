@@ -7,6 +7,13 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['idPersona'])) {
     exit;
 }
 
+// Incluir funciones de breadcrumbs
+require_once 'header.php';
+
+// Resetear breadcrumbs en el menú principal
+resetBreadcrumbs();
+addBreadcrumb('Menú Principal', '/BD2_Prac2/menu.php');
+
 $con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
@@ -44,6 +51,8 @@ $resFuncs = mysqli_query($con, $sqlFuncs);
     </style>
 </head>
 <body>
+    <?php displayBreadcrumbs(); ?>
+    
     <h2>Bienvenido <?php echo htmlspecialchars($_SESSION['nombre']); ?></h2>
     <p>Funciones disponibles:</p>
     <ul>

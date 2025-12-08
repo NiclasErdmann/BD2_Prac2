@@ -70,6 +70,7 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Modificar Colonias', 'estela/crearColonia.html'),
     ('Ver Colonias', 'estela/listar_colonias.html'),
     ('Gestionar Grupos', 'estela/listar_grupoTrabajo.php'),
+    ('Ver Grupos', 'estela/listar_grupoTrabajo.php'),
     ('Registrar Incidencia', 'AÑADIR RUTA AQUÍ'),
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ');
 
@@ -94,8 +95,11 @@ INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     (1, 3),
     (1, 4),
     (1, 5),
+    (1, 6),
     (2, 2),
-    (2, 4);
+    (2, 4),
+    (3, 4),
+    (3, 4);
 
 INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas) VALUES
     ('CatPlus', 'Alta', 'Rica en proteínas');

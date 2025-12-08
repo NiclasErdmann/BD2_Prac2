@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Incluir funciones de breadcrumbs
+require_once '../header.php';
+
 // Conexión a BD
 $con = mysqli_connect("localhost","root","","BD2_Prac2");
 if (!$con) {
@@ -34,6 +37,16 @@ $idAyuntamiento = (int) $_SESSION['idAyuntamiento'];
 $idPersona = isset($_SESSION['idPersona']) ? (int) $_SESSION['idPersona'] : 0;
 $puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'modificar Colonia') : false;
 
+// Obtener el nombre del ayuntamiento
+$sqlAyuntamiento = "SELECT nombre FROM AYUNTAMIENTO WHERE idAyuntamiento = ?";
+$stmtAyunt = mysqli_prepare($con, $sqlAyuntamiento);
+mysqli_stmt_bind_param($stmtAyunt, "i", $idAyuntamiento);
+mysqli_stmt_execute($stmtAyunt);
+$resultadoAyunt = mysqli_stmt_get_result($stmtAyunt);
+$ayuntamiento = mysqli_fetch_assoc($resultadoAyunt);
+$nombreAyuntamiento = $ayuntamiento['nombre'] ?? 'Desconocido';
+mysqli_stmt_close($stmtAyunt);
+
 // Consultar colonias del ayuntamiento
 $query = "SELECT idColonia, nombre, lugarReferencia, numeroGatos
           FROM COLONIA_FELINA
@@ -46,6 +59,9 @@ $resultado = mysqli_query($con, $query);
 if (!$resultado) {
     die('Error en la consulta: ' . mysqli_error($con));
 }
+
+// Añadir breadcrumb
+addBreadcrumb('Mis Colonias');
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +92,9 @@ if (!$resultado) {
     </style>
 </head>
 <body>
-    <h2>Mis Colonias (Ayuntamiento)</h2>
+    <?php displayBreadcrumbs(); ?>
+    
+    <h2>Mis Colonias (Ayuntamiento de <?php echo htmlspecialchars($nombreAyuntamiento); ?>)</h2>
     <?php if ($puedeModificar): ?>
         <a href="formularioCrear_Colonias.php">
             <button>Crear Nueva Colonia</button>
@@ -107,8 +125,6 @@ if (!$resultado) {
         ?>
     </table>
 
-    <br><br>
-    <a href="../menu.php">Volver al menú</a>
 </body>
 </html>
 

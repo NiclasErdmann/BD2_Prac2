@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Incluir funciones de breadcrumbs
+require_once '../header.php';
+
 // Helper: verifica si el usuario tiene una función asignada
 function usuarioPuede($con, $idPersona, $funcionNombre) {
     $sqlPerm = "SELECT 1
@@ -66,6 +69,8 @@ mysqli_stmt_bind_param($stmt2, 'i', $id);
 mysqli_stmt_execute($stmt2);
 $resCats = mysqli_stmt_get_result($stmt2);
 
+// Añadir breadcrumb
+addBreadcrumb($colonia['nombre']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -82,12 +87,12 @@ $resCats = mysqli_stmt_get_result($stmt2);
     </style>
 </head>
 <body>
+    <?php displayBreadcrumbs(); ?>
 
     <div class="card">
         <h1>Colonia: <?php echo htmlspecialchars($colonia['nombre']); ?></h1>
         <p class="meta">ID: <?php echo (int)$colonia['idColonia']; ?></p>
 
-        <a href="listar_colonias.php">← Volver al listado</a>
         <hr>
 
         <h3>Datos generales</h3>
