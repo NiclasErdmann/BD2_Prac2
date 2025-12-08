@@ -31,7 +31,7 @@ function usuarioPuede($con, $idPersona, $funcionNombre) {
 $con = mysqli_connect('localhost','root','','BD2_Prac2');
 if (!$con) die('Error de conexión: ' . mysqli_connect_error());
 
-if (!usuarioPuede($con, $idPersona, 'modificar Colonia')) {
+if (!usuarioPuede($con, $idPersona, 'Modificar Colonias')) {
     mysqli_close($con);
     die('No tienes permiso para modificar colonias.');
 }

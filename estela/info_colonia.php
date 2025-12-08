@@ -35,7 +35,7 @@ if (!$con) {
 }
 
 $idPersona = isset($_SESSION['idPersona']) ? (int) $_SESSION['idPersona'] : 0;
-$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'modificar Colonia') : false;
+$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'Modificar Colonias') : false;
 
 // Consulta: obtener datos de la colonia y nombre del grupo (si existe)
 $sql = "SELECT c.idColonia, c.nombre, c.descripcion, c.coordenadas, c.lugarReferencia, c.numeroGatos,

@@ -35,7 +35,7 @@ if (!isset($_SESSION['idAyuntamiento']) || empty($_SESSION['idAyuntamiento'])) {
 
 $idAyuntamiento = (int) $_SESSION['idAyuntamiento'];
 $idPersona = isset($_SESSION['idPersona']) ? (int) $_SESSION['idPersona'] : 0;
-$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'modificar Colonia') : false;
+$puedeModificar = ($idPersona > 0) ? usuarioPuede($con, $idPersona, 'Modificar Colonias') : false;
 
 // Obtener el nombre del ayuntamiento
 $sqlAyuntamiento = "SELECT nombre FROM AYUNTAMIENTO WHERE idAyuntamiento = ?";
@@ -47,13 +47,15 @@ $ayuntamiento = mysqli_fetch_assoc($resultadoAyunt);
 $nombreAyuntamiento = $ayuntamiento['nombre'] ?? 'Desconocido';
 mysqli_stmt_close($stmtAyunt);
 
-// Consultar colonias del ayuntamiento
-$query = "SELECT idColonia, nombre, lugarReferencia, numeroGatos
-          FROM COLONIA_FELINA
-          WHERE idGrupoTrabajo IN (
+// Consultar colonias del ayuntamiento con su grupo asignado
+$query = "SELECT C.idColonia, C.nombre, C.lugarReferencia, C.numeroGatos,
+                 G.idGrupoTrabajo, G.nombre AS nombreGrupo
+          FROM COLONIA_FELINA C
+          LEFT JOIN GRUPO_TRABAJO G ON C.idGrupoTrabajo = G.idGrupoTrabajo
+          WHERE C.idGrupoTrabajo IN (
               SELECT idGrupoTrabajo FROM GRUPO_TRABAJO WHERE idAyuntamiento = $idAyuntamiento
           )
-          ORDER BY nombre";
+          ORDER BY C.nombre";
 
 $resultado = mysqli_query($con, $query);
 if (!$resultado) {
@@ -105,8 +107,9 @@ addBreadcrumb('Mis Colonias');
     <table>
         <tr>
             <th>Nombre</th>
-            <th>Ubicacion</th>
-            <th>Numero de Gatos</th>
+            <th>Ubicación</th>
+            <th>Grupo de Trabajo</th>
+            <th>Número de Gatos</th>
         </tr>
 
         <?php
@@ -116,6 +119,13 @@ addBreadcrumb('Mis Colonias');
                 echo "<tr>";
                 echo "<td><a href='info_colonia.php?id=" . $fila['idColonia'] . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
                 echo "<td>" . htmlspecialchars($fila['lugarReferencia']) . "</td>";
+                echo "<td>";
+                if (!empty($fila['idGrupoTrabajo'])) {
+                    echo "<a href='info_grupoTrabajo.php?id=" . $fila['idGrupoTrabajo'] . "'>" . htmlspecialchars($fila['nombreGrupo']) . "</a>";
+                } else {
+                    echo "<i>Sin asignar</i>";
+                }
+                echo "</td>";
                 echo "<td>" . $fila['numeroGatos'] . "</td>";
                 echo "</tr>";
             }

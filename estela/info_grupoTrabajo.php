@@ -185,15 +185,12 @@ addBreadcrumb($grupo['nombreGrupo']);
     <br><br>
 
     <?php if ($puedeGestionar): ?>
-    <form action="form_grupoTrabajo.html" method="GET">
-        <input type="hidden" name="id" value="<?php echo $idGrupo; ?>">
-        <button type="submit" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-            ✏ Editar Datos del Grupo / Cambiar Responsable
-        </button>
-    </form>
-    <?php endif; ?>
-
-</body>
+        <a href="formularioEditar_grupoTrabajo.php?id=<?php echo $idGrupo; ?>">
+            <button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+                ✏ Editar Datos del Grupo / Cambiar Responsable
+            </button>
+        </a>
+    <?php endif; ?></body>
 </html>
 
 <?php

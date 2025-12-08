@@ -47,7 +47,7 @@ $con = mysqli_connect('localhost','root','','BD2_Prac2');
 if (!$con) die('Error conexión: ' . mysqli_connect_error());
 
 // Verificar permiso para modificar/crear
-if (!usuarioPuede($con, (int)$_SESSION['idPersona'], 'modificar Colonia')) {
+if (!usuarioPuede($con, (int)$_SESSION['idPersona'], 'Modificar Colonias')) {
     mysqli_close($con);
     die('No tienes permiso para modificar colonias.');
 }
