@@ -91,6 +91,8 @@ CREATE TABLE COLONIA_FELINA(
 CREATE TABLE GATO(
     idGato INT PRIMARY KEY AUTO_INCREMENT,
     numXIP VARCHAR(200),
+    nombre VARCHAR(200),
+    sexo VARCHAR(50),
     descripcion TEXT,
     foto TEXT,
     idCementerio INT,
