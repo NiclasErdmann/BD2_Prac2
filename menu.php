@@ -61,7 +61,7 @@ $resFuncs = mysqli_query($con, $sqlFuncs);
             while ($f = mysqli_fetch_assoc($resFuncs)) {
                 $ruta = !empty($f['ruta'])
                     ? $f['ruta']
-                    : 'estela/' . strtolower(str_replace(' ', '_', $f['nombre'])) . '.php';
+                    : 'BD249482420/' . strtolower(str_replace(' ', '_', $f['nombre'])) . '.php';
 
                 // Si la ruta termina en .html pero existe la .php, usar la .php
                 if (substr($ruta, -5) === '.html') {

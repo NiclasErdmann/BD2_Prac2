@@ -1,37 +1,83 @@
 <?php
 session_start();
 
-// Incluir funciones de breadcrumbs
 require_once '../header.php';
 
-// Conexión a BD
 $con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
 
-// Verificar sesión
 $idAyuntamiento = $_SESSION['idAyuntamiento'] ?? null;
-$idGrupo = $_GET['idGrupo'] ?? null;
+$idPersonaSesion = $_SESSION['idPersona'] ?? null;
+$idGrupo = isset($_GET['idGrupo']) ? (int)$_GET['idGrupo'] : (isset($_POST['idGrupo']) ? (int)$_POST['idGrupo'] : 0);
+$guardar = $_GET['guardar'] ?? $_POST['guardar'] ?? null;
 
-if (!$idAyuntamiento || !$idGrupo) {
+if (!$idAyuntamiento || !$idPersonaSesion || !$idGrupo) {
     die('Error: datos incompletos.');
 }
 
-// Obtener información del grupo
+// Permiso: Gestionar Grupos (idFuncion = 3)
+$sqlPermiso = "SELECT COUNT(*) as tienePermiso
+               FROM PER_ROL PR
+               INNER JOIN PUEDEHACER PH ON PR.idRol = PH.idRol
+               WHERE PR.idPersona = ? AND PH.idFuncion = 3";
+$stmtPermiso = mysqli_prepare($con, $sqlPermiso);
+mysqli_stmt_bind_param($stmtPermiso, "i", $idPersonaSesion);
+mysqli_stmt_execute($stmtPermiso);
+$permiso = mysqli_fetch_assoc(mysqli_stmt_get_result($stmtPermiso));
+$puedeGestionar = $permiso['tienePermiso'] > 0;
+
+if (!$puedeGestionar) {
+    die('Error: no tienes permisos para gestionar grupos.');
+}
+
+// Verificar que el grupo es del ayuntamiento
 $sqlGrupo = "SELECT nombre FROM GRUPO_TRABAJO WHERE idGrupoTrabajo = ? AND idAyuntamiento = ?";
 $stmtGrupo = mysqli_prepare($con, $sqlGrupo);
 mysqli_stmt_bind_param($stmtGrupo, "ii", $idGrupo, $idAyuntamiento);
 mysqli_stmt_execute($stmtGrupo);
-$resultadoGrupo = mysqli_stmt_get_result($stmtGrupo);
-$grupo = mysqli_fetch_assoc($resultadoGrupo);
+$grupo = mysqli_fetch_assoc(mysqli_stmt_get_result($stmtGrupo));
 
 if (!$grupo) {
     die('Grupo no encontrado.');
 }
 
+if ($guardar === '1') {
+    $idPersona = isset($_POST['idPersona']) ? (int)$_POST['idPersona'] : 0;
+    if ($idPersona <= 0) {
+        die('Error: persona no válida.');
+    }
+
+    // Verificar si la persona ya es voluntario del ayuntamiento
+    $sqlCheckVol = "SELECT idVoluntario FROM VOLUNTARIO WHERE idPersona = ? AND idAyuntamiento = ?";
+    $stmtCheck = mysqli_prepare($con, $sqlCheckVol);
+    mysqli_stmt_bind_param($stmtCheck, "ii", $idPersona, $idAyuntamiento);
+    mysqli_stmt_execute($stmtCheck);
+    $resultCheck = mysqli_stmt_get_result($stmtCheck);
+
+    if (mysqli_num_rows($resultCheck) > 0) {
+        // Ya es voluntario, actualizar el grupo (mover de un grupo a otro)
+        $sql = "UPDATE VOLUNTARIO SET idGrupoTrabajo = ? WHERE idPersona = ? AND idAyuntamiento = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "iii", $idGrupo, $idPersona, $idAyuntamiento);
+    } else {
+        // No es voluntario, crear nuevo registro
+        $sql = "INSERT INTO VOLUNTARIO (idAyuntamiento, idGrupoTrabajo, idPersona) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "iii", $idAyuntamiento, $idGrupo, $idPersona);
+    }
+
+    if (!mysqli_stmt_execute($stmt)) {
+        die('Error al añadir el voluntario: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_close($stmt);
+    header('Location: info_grupoTrabajo.php?id=' . $idGrupo);
+    exit;
+}
+
 // Obtener personas que NO están en este grupo específico
-// Mostrar sin asignar y las que están en otros grupos
 $sqlPersonas = "SELECT P.idPersona, P.nombre, P.apellido, P.telefono, P.email,
                        V.idVoluntario, V.idGrupoTrabajo,
                        CASE WHEN V.idVoluntario IS NULL THEN 'Sin asignar'
@@ -54,10 +100,9 @@ mysqli_stmt_bind_param($stmtPers, "iii", $idGrupo, $idAyuntamiento, $idGrupo);
 mysqli_stmt_execute($stmtPers);
 $resultadoPers = mysqli_stmt_get_result($stmtPers);
 
-// Añadir breadcrumb
+addBreadcrumb('Grupos de Trabajo', 'listar_grupoTrabajo.php');
 addBreadcrumb('Añadir Voluntario');
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -85,8 +130,9 @@ addBreadcrumb('Añadir Voluntario');
     </div>
 
     <?php if (mysqli_num_rows($resultadoPers) > 0): ?>
-        <form action="asignar_miembro_guardar.php" method="POST">
+        <form action="asignar_miembro_accion.php" method="POST">
             <input type="hidden" name="idGrupo" value="<?php echo $idGrupo; ?>">
+            <input type="hidden" name="guardar" value="1">
             
             <label for="idPersona">Selecciona una Persona:</label>
             <select id="idPersona" name="idPersona" required>
@@ -114,14 +160,11 @@ addBreadcrumb('Añadir Voluntario');
         </form>
     <?php else: ?>
         <p><strong>No hay personas disponibles para añadir a este grupo.</strong></p>
-        <p>Todas las personas registradas ya están asignadas a otros grupos o son miembros de este grupo.</p>
+        <p>Todas las personas registradas ya están asignadas a este grupo.</p>
         <br>
         <a href="info_grupoTrabajo.php?id=<?php echo $idGrupo; ?>" class="cancelar">Volver</a>
     <?php endif; ?>
 
+    <?php mysqli_stmt_close($stmtPers); mysqli_close($con); ?>
 </body>
 </html>
-
-<?php
-mysqli_close($con);
-?>

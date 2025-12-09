@@ -98,7 +98,7 @@ addBreadcrumb('Mis Colonias');
     
     <h2>Mis Colonias (Ayuntamiento de <?php echo htmlspecialchars($nombreAyuntamiento); ?>)</h2>
     <?php if ($puedeModificar): ?>
-        <a href="formularioCrear_Colonias.php">
+        <a href="colonia_accion.php?accion=crear">
             <button>Crear Nueva Colonia</button>
         </a>
     <?php endif; ?>

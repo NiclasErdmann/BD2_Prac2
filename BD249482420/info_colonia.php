@@ -121,7 +121,7 @@ addBreadcrumb($colonia['nombre']);
 
         <?php if ($puedeModificar): ?>
             <p style="margin-top:16px;">
-                <a class="button" href="formularioEditar_Colonias.php?id=<?php echo (int)$colonia['idColonia']; ?>">✏ Editar colonia</a>
+                <a class="button" href="colonia_accion.php?accion=editar&id=<?php echo (int)$colonia['idColonia']; ?>">✏ Editar colonia</a>
             </p>
         <?php endif; ?>
 

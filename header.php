@@ -33,23 +33,12 @@ function addBreadcrumb($titulo, $url = null) {
         }
     }
     
-    // Limpiar la URL actual para comparar
-    $urlActual = parse_url($url, PHP_URL_PATH);
-    $queryActual = [];
-    if (strpos($url, '?') !== false) {
-        parse_str(parse_url($url, PHP_URL_QUERY), $queryActual);
-    }
-    
-    // Verificar si ya existe esta página en el historial
+    // Verificar si ya existe un breadcrumb con el MISMO TÍTULO
+    // Si existe, eliminar todo desde ese punto y más allá
     foreach ($_SESSION['breadcrumbs'] as $index => $crumb) {
-        $urlCrumb = parse_url($crumb['url'], PHP_URL_PATH);
-        $queryCrumb = [];
-        if (strpos($crumb['url'], '?') !== false) {
-            parse_str(parse_url($crumb['url'], PHP_URL_QUERY), $queryCrumb);
-        }
-        
-        // Si la URL y los parámetros coinciden, eliminar todo lo que está después
-        if ($urlCrumb === $urlActual && $queryCrumb == $queryActual) {
+        if ($crumb['titulo'] === $titulo) {
+            // Encontramos un breadcrumb con el mismo título
+            // Mantener solo los breadcrumbs hasta este (sin incluirlo)
             $_SESSION['breadcrumbs'] = array_slice($_SESSION['breadcrumbs'], 0, $index);
             break;
         }

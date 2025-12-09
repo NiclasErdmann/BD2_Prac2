@@ -18,23 +18,26 @@ INSERT INTO PERSONA (nombre, apellido, usuario, contrasena, email, telefono) VAL
     ('Roberto', 'Jiménez', 'roberto.vol2', 'passRoberto', 'roberto2@cuenca.es', '601333444'),
     ('Patricia', 'Vargas', 'patricia.vol2', 'passPatricia', 'patricia2@cuenca.es', '601444555');
 
-INSERT INTO GRUPO_TRABAJO (nombre, descripcion, idResponsable, idAyuntamiento) VALUES
-    ('Grupo Centro', 'Colonias del casco antiguo', 3, 1),
-    ('Grupo Parques', 'Zonas verdes y parques', 4, 1);
-
 INSERT INTO VOLUNTARIO (idAyuntamiento, idGrupoTrabajo, idPersona) VALUES
-    (1, 1, 2),
-    (1, 2, 3),
-    (1, 1, 4),
-    (1, 2, 5),
-    (1, 1, 6),
-    (1, 1, 7),
-    (1, 1, 8),
-    (1, 1, 9),
-    (1, 2, 10),
-    (1, 2, 11),
-    (1, 2, 12),
-    (1, 2, 13);
+    (1, NULL, 2),
+    (1, NULL, 3),
+    (1, NULL, 4),
+    (1, NULL, 5),
+    (1, NULL, 6),
+    (1, NULL, 7),
+    (1, NULL, 8),
+    (1, NULL, 9),
+    (1, NULL, 10),
+    (1, NULL, 11),
+    (1, NULL, 12),
+    (1, NULL, 13);
+
+INSERT INTO GRUPO_TRABAJO (nombre, descripcion, idResponsable, idAyuntamiento) VALUES
+    ('Grupo Centro', 'Colonias del casco antiguo', 1, 1),
+    ('Grupo Parques', 'Zonas verdes y parques', 2, 1);
+
+UPDATE VOLUNTARIO SET idGrupoTrabajo = 1 WHERE idPersona IN (2, 4, 6, 7, 8, 9);
+UPDATE VOLUNTARIO SET idGrupoTrabajo = 2 WHERE idPersona IN (3, 5, 10, 11, 12, 13);
 
 
 INSERT INTO ADMINAYU (idAyuntamiento, idPersona) VALUES
@@ -67,10 +70,11 @@ INSERT INTO ROL (nombre) VALUES
     ('voluntario');
 
 INSERT INTO FUNCION (nombre, ruta) VALUES
-    ('Modificar Colonias', 'estela/crearColonia.html'),
-    ('Ver Colonias', 'estela/listar_colonias.html'),
-    ('Gestionar Grupos', 'estela/listar_grupoTrabajo.php'),
-    ('Ver Grupos', 'estela/listar_grupoTrabajo.php'),
+    ('Modificar Colonias', 'BD249482420/crearColonia.html'),
+    ('Ver Colonias', 'BD249482420/listar_colonias.html'),
+    ('Gestionar Grupos', 'BD249482420/listar_grupoTrabajo.php'),
+    ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
+    ('Borsi Voluntarios', 'BD249482420/gestionarBorsi.php'),
     ('Registrar Incidencia', 'AÑADIR RUTA AQUÍ'),
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ');
 
@@ -95,7 +99,6 @@ INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     (1, 3),
     (1, 4),
     (1, 5),
-    (1, 6),
     (2, 2),
     (2, 4),
     (3, 4),

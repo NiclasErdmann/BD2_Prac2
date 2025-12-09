@@ -88,7 +88,7 @@ addBreadcrumb('Grupos de Trabajo');
     <h1>Grupos de Trabajo</h1>
 
     <?php if ($puedeGestionar): ?>
-        <a href="formularioCrear_grupoTrabajo.php">
+        <a href="grupo_accion.php?accion=crear">
             <button>+ Añadir Grupo de Trabajo</button>
         </a>
     <?php endif; ?>

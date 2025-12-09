@@ -158,7 +158,7 @@ addBreadcrumb($grupo['nombreGrupo']);
                     
                     <?php if ($puedeGestionar): ?>
                     <br>
-                    <small><a href="asignar_colonia.php?idGrupo=<?php echo $idGrupo; ?>">[+ Asignar otra colonia]</a></small>
+                    <small><a href="asignar_colonia_accion.php?idGrupo=<?php echo $idGrupo; ?>">[+ Asignar otra colonia]</a></small>
                     <?php endif; ?>
                 </td>
 
@@ -175,7 +175,7 @@ addBreadcrumb($grupo['nombreGrupo']);
                     
                     <?php if ($puedeGestionar): ?>
                     <br>
-                    <small><a href="asignar_miembro.php?idGrupo=<?php echo $idGrupo; ?>">[+ Añadir Voluntario]</a></small>
+                    <small><a href="asignar_miembro_accion.php?idGrupo=<?php echo $idGrupo; ?>">[+ Añadir Voluntario]</a></small>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -185,7 +185,7 @@ addBreadcrumb($grupo['nombreGrupo']);
     <br><br>
 
     <?php if ($puedeGestionar): ?>
-        <a href="formularioEditar_grupoTrabajo.php?id=<?php echo $idGrupo; ?>">
+        <a href="grupo_accion.php?accion=editar&id=<?php echo $idGrupo; ?>">
             <button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
                 ✏ Editar Datos del Grupo / Cambiar Responsable
             </button>
