@@ -25,7 +25,7 @@ $filtroXIP = $_GET['xip'] ?? '';
 $filtroSexo = $_GET['sexo'] ?? '';
 
 // Construir query con filtros
-$sql = "SELECT g.idGato, g.nombre, g.numXIP, g.sexo, g.descripcion,
+$sql = "SELECT g.idGato, g.nombre, g.numXIP, g.sexo, g.descripcion, g.foto,
                c.nombre as nombreColonia, h.idColonia
         FROM GATO g
         LEFT JOIN HISTORIAL h ON g.idGato = h.idGato AND h.fechaIda IS NULL
@@ -77,9 +77,9 @@ if ($modo == 'albirament') {
 
 // Configurar textos según el modo
 $titulos = [
-    'ver' => ['titulo' => '🐱 Listado de Gatos', 'subtitulo' => 'Todos los gatos registrados en el sistema'],
-    'albirament' => ['titulo' => '🔍 Albirament de Gatos', 'subtitulo' => 'Registra el avistamiento de un gato en una colonia diferente'],
-    'incidencia' => ['titulo' => '🐱 Seleccionar Gato para Incidencia', 'subtitulo' => 'Busca y selecciona el gato para registrar la incidencia']
+    'ver' => ['titulo' => 'Listado de Gatos', 'subtitulo' => 'Todos los gatos registrados en el sistema'],
+    'albirament' => ['titulo' => 'Albirament de Gatos', 'subtitulo' => 'Registra el avistamiento de un gato en una colonia diferente'],
+    'incidencia' => ['titulo' => 'Seleccionar Gato para Incidencia', 'subtitulo' => 'Busca y selecciona el gato para registrar la incidencia']
 ];
 
 $textoConfig = $titulos[$modo] ?? $titulos['ver'];
@@ -99,7 +99,7 @@ addBreadcrumb($textoConfig['titulo']);
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: white;
         }
         .container {
             max-width: 1400px;
@@ -114,18 +114,15 @@ addBreadcrumb($textoConfig['titulo']);
             margin-bottom: 20px;
         }
         .info-box {
-            background-color: #d1ecf1;
-            border-left: 4px solid #0c5460;
+            background-color: white;
+            border: 1px solid #ccc;
             padding: 15px;
             margin-bottom: 20px;
-            border-radius: 4px;
-            color: #0c5460;
         }
         .filtros-container {
             background-color: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
             margin-bottom: 20px;
         }
         .filtros-container h3 {
@@ -158,28 +155,25 @@ addBreadcrumb($textoConfig['titulo']);
         }
         .btn-filtrar {
             padding: 8px 20px;
-            background-color: #007bff;
+            background-color: #333;
             color: white;
-            border: none;
-            border-radius: 4px;
+            border: 1px solid #333;
             cursor: pointer;
-            font-weight: bold;
         }
         .btn-filtrar:hover {
-            background-color: #0056b3;
+            background-color: #555;
         }
         .btn-limpiar {
             padding: 8px 20px;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            border: 1px solid #333;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
         }
         .btn-limpiar:hover {
-            background-color: #5a6268;
+            background-color: #f0f0f0;
         }
         .gatos-grid {
             display: grid;
@@ -190,13 +184,29 @@ addBreadcrumb($textoConfig['titulo']);
         .gato-card {
             background-color: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-left: 4px solid #007bff;
+            border: 1px solid #ccc;
         }
         .gato-card h3 {
             margin-top: 0;
             color: #333;
+        }
+        .gato-foto {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+        }
+        .sin-foto {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
         }
         .gato-info {
             margin: 10px 0;
@@ -215,22 +225,17 @@ addBreadcrumb($textoConfig['titulo']);
             line-height: 1.5em;
         }
         .colonia-actual {
-            background-color: #e7f3ff;
             padding: 8px;
-            border-radius: 4px;
             margin: 10px 0;
-            font-weight: bold;
-            color: #0066cc;
         }
         .form-albirament {
-            background-color: #fff3cd;
+            background-color: white;
             padding: 15px;
-            border-radius: 5px;
+            border: 1px solid #ccc;
             margin-top: 15px;
         }
         .form-albirament h4 {
             margin-top: 0;
-            color: #856404;
         }
         .form-albirament select {
             width: 100%;
@@ -240,36 +245,31 @@ addBreadcrumb($textoConfig['titulo']);
             margin-bottom: 10px;
         }
         .form-incidencia {
-            background-color: #ffe8e8;
+            background-color: white;
             padding: 15px;
-            border-radius: 5px;
+            border: 1px solid #ccc;
             margin-top: 15px;
         }
         .form-incidencia h4 {
             margin-top: 0;
-            color: #721c24;
         }
         .btn-registrar {
-            background-color: #28a745;
+            background-color: #333;
             color: white;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #333;
             cursor: pointer;
-            font-weight: bold;
             width: 100%;
         }
         .btn-registrar:hover {
-            background-color: #218838;
+            background-color: #555;
         }
         .btn-seleccionar {
-            background-color: #dc3545;
+            background-color: #333;
             color: white;
             padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #333;
             cursor: pointer;
-            font-weight: bold;
             width: 100%;
             text-decoration: none;
             display: block;
@@ -278,34 +278,20 @@ addBreadcrumb($textoConfig['titulo']);
             box-sizing: border-box;
         }
         .btn-seleccionar:hover {
-            background-color: #c82333;
+            background-color: #555;
         }
         .no-resultados {
             text-align: center;
             padding: 40px;
             background-color: white;
-            border-radius: 8px;
+            border: 1px solid #ccc;
             color: #666;
         }
-        .badge-sexo {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .badge-macho {
-            background-color: #007bff;
-            color: white;
-        }
-        .badge-hembra {
-            background-color: #e83e8c;
-            color: white;
-        }
+
         .btn-volver {
             display: inline-block;
             margin-top: 20px;
-            color: #007bff;
+            color: #333;
             text-decoration: none;
         }
         .btn-volver:hover {
@@ -321,21 +307,21 @@ addBreadcrumb($textoConfig['titulo']);
         <p class="subtitle"><?php echo $textoConfig['subtitulo']; ?></p>
 
         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-            <div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 12px; border-radius: 5px; margin-bottom: 20px;">
-                ✓ <?php echo ($modo == 'albirament') ? 'Albirament registrado correctamente. El historial del gato ha sido actualizado.' : 'Operación completada correctamente.'; ?>
+            <div style="background-color: white; border: 1px solid #333; padding: 12px; margin-bottom: 20px;">
+                <?php echo ($modo == 'albirament') ? 'Albirament registrado correctamente. El historial del gato ha sido actualizado.' : 'Operación completada correctamente.'; ?>
             </div>
         <?php endif; ?>
 
         <?php if ($modo == 'albirament'): ?>
             <div class="info-box">
-                <strong>ℹ️ ¿Cómo funciona el Albirament?</strong><br>
+                <strong>¿Cómo funciona el Albirament?</strong><br>
                 1. Usa los filtros para buscar el gato que has visto<br>
                 2. Selecciona la nueva colonia donde lo has avistado<br>
                 3. Confirma el albirament - se actualizará automáticamente el historial del gato
             </div>
         <?php elseif ($modo == 'incidencia'): ?>
             <div class="info-box">
-                <strong>ℹ️ Registrar Incidencia</strong><br>
+                <strong>Registrar Incidencia</strong><br>
                 1. Busca el gato usando los filtros<br>
                 2. Haz clic en "Seleccionar para Incidencia"<br>
                 3. Completa los datos de la incidencia
@@ -344,7 +330,7 @@ addBreadcrumb($textoConfig['titulo']);
 
         <!-- Filtros -->
         <div class="filtros-container">
-            <h3>🔎 Buscar Gato</h3>
+            <h3>Buscar Gato</h3>
             <form method="GET" action="">
                 <input type="hidden" name="modo" value="<?php echo htmlspecialchars($modo); ?>">
                 <div class="filtro-grupo">
@@ -358,14 +344,14 @@ addBreadcrumb($textoConfig['titulo']);
                     </div>
                     <div class="filtro-item">
                         <label for="xip">Número XIP:</label>
-                        <input type="text" name="xip" id="xip" value="<?php echo htmlspecialchars($filtroXIP); ?>" placeholder="Ej: ES123">
+                        <input type="text" name="xip" id="xip" value="<?php echo htmlspecialchars($filtroXIP); ?>" placeholder="Ej: XIP-007">
                     </div>
                     <div class="filtro-item">
                         <label for="sexo">Sexo:</label>
                         <select name="sexo" id="sexo">
                             <option value="">Todos</option>
-                            <option value="M" <?php echo ($filtroSexo == 'M') ? 'selected' : ''; ?>>Macho</option>
-                            <option value="H" <?php echo ($filtroSexo == 'H') ? 'selected' : ''; ?>>Hembra</option>
+                            <option value="Macho" <?php echo ($filtroSexo == 'Macho') ? 'selected' : ''; ?>>Macho</option>
+                            <option value="Hembra" <?php echo ($filtroSexo == 'Hembra') ? 'selected' : ''; ?>>Hembra</option>
                         </select>
                     </div>
                     <div class="filtro-item">
@@ -381,16 +367,19 @@ addBreadcrumb($textoConfig['titulo']);
             <div class="gatos-grid">
                 <?php while ($gato = mysqli_fetch_assoc($resultado)): ?>
                     <div class="gato-card">
-                        <h3>🐱 <?php echo htmlspecialchars($gato['nombre']); ?></h3>
+                        <?php if ($gato['foto']): ?>
+                            <img src="../<?php echo htmlspecialchars($gato['foto']); ?>" alt="<?php echo htmlspecialchars($gato['nombre']); ?>" class="gato-foto">
+                        <?php else: ?>
+                            <div class="sin-foto">Foto no disponible</div>
+                        <?php endif; ?>
+                        
+                        <h3> <?php echo htmlspecialchars($gato['nombre']); ?></h3>
                         
                         <div class="gato-info">
                             <strong>XIP:</strong> <?php echo $gato['numXIP'] ? htmlspecialchars($gato['numXIP']) : 'Sin XIP'; ?><br>
                             
                             <?php if ($gato['sexo']): ?>
-                                <strong>Sexo:</strong> 
-                                <span class="badge-sexo <?php echo ($gato['sexo'] == 'M') ? 'badge-macho' : 'badge-hembra'; ?>">
-                                    <?php echo ($gato['sexo'] == 'M') ? 'Macho' : 'Hembra'; ?>
-                                </span><br>
+                                <strong>Sexo:</strong> <?php echo htmlspecialchars($gato['sexo']); ?><br>
                             <?php endif; ?>
                             
                             <?php if ($gato['descripcion']): ?>
@@ -401,7 +390,7 @@ addBreadcrumb($textoConfig['titulo']);
 
                         <?php if ($gato['nombreColonia']): ?>
                             <div class="colonia-actual">
-                                📍 Colonia actual: <?php echo htmlspecialchars($gato['nombreColonia']); ?>
+                                Colonia actual: <?php echo htmlspecialchars($gato['nombreColonia']); ?>
                             </div>
                         <?php endif; ?>
 
@@ -445,12 +434,12 @@ addBreadcrumb($textoConfig['titulo']);
             </div>
         <?php else: ?>
             <div class="no-resultados">
-                <p>📭 No se encontraron gatos con los criterios de búsqueda.</p>
+                <p>No se encontraron gatos con los criterios de búsqueda.</p>
                 <p>Intenta ajustar los filtros.</p>
             </div>
         <?php endif; ?>
 
-        <a href="../menu.php" class="btn-volver">← Volver al menú</a>
+        <a href="../menu.php" class="btn-volver">Volver al menú</a>
     </div>
 </body>
 </html>

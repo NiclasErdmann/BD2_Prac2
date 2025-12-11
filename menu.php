@@ -12,7 +12,11 @@ require_once 'header.php';
 
 // Resetear breadcrumbs en el menú principal
 resetBreadcrumbs();
-addBreadcrumb('Menú Principal', '/BD2_Prac2/menu.php');
+
+// Añadir breadcrumb del menú con ruta dinámica
+$scriptPath = $_SERVER['SCRIPT_NAME'];
+$projectBase = substr($scriptPath, 0, strpos($scriptPath, 'BD2_Prac2') + 9);
+addBreadcrumb('Menú Principal', $projectBase . '/menu.php');
 
 $con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
 if (!$con) {

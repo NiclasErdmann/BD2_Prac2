@@ -51,14 +51,14 @@ INSERT INTO COLONIA_FELINA (nombre, descripcion, coordenadas, lugarReferencia, n
     ('Colonia Parque', 'Comunidad en el parque central', '40.0745,-88.2545', 'Parque Central', 22, 2);
 
 INSERT INTO GATO (numXIP, nombre, sexo, descripcion, foto, idCementerio) VALUES
-    ('XIP-001', 'Misu', 'Hembra', 'Gata atigrada, muy cariñosa', NULL, NULL),
-    ('XIP-002', 'Felix', 'Macho', 'Gato negro, tímido', NULL, NULL),
-    ('XIP-003', 'Luna', 'Hembra', 'Gata gris, sociable', NULL, NULL),
-    ('XIP-004', 'Tom', 'Macho', 'Gato blanco con manchas', NULL, NULL),
-    ('XIP-005', 'Nieve', 'Hembra', 'Gata blanca de ojos azules', NULL, NULL),
-    (NULL, 'Bigotes', 'Macho', 'Gato atigrado sin XIP aún', NULL, NULL),
-    (NULL, 'Sombra', 'Hembra', 'Gata negra muy esquiva', NULL, NULL),
-    ('XIP-006', 'Garfield', 'Macho', 'Gato naranja, falleció', NULL, 1);
+    ('XIP-001', 'Misu', 'H', 'Gata atigrada, muy cariñosa', 'imagenes/gatos/misu.jpg', NULL),
+    ('XIP-002', 'Felix', 'M', 'Gato negro, tímido', 'imagenes/gatos/felix.jpg', NULL),
+    ('XIP-003', 'Luna', 'H', 'Gata gris, sociable', 'imagenes/gatos/luna.jpg', NULL),
+    ('XIP-004', 'Tom', 'M', 'Gato blanco con manchas', 'imagenes/gatos/tom.jpg', NULL),
+    ('XIP-005', 'Nieve', 'H', 'Gata blanca de ojos azules', 'imagenes/gatos/nieve.jpg', NULL),
+    (NULL, 'Bigotes', 'M', 'Gato atigrado sin XIP aún', NULL, NULL),
+    (NULL, 'Sombra', 'H', 'Gata negra muy esquiva', NULL, NULL),
+    ('XIP-006', 'Garfield', 'M', 'Gato naranja, falleció', 'imagenes/gatos/garfield.jpg', 1);
 
 INSERT INTO HISTORIAL (fechaLlegada, fechaIda, idGato, idColonia) VALUES
     ('2024-01-10', NULL, 1, 1),   -- Misu en Colonia Centro
@@ -89,7 +89,7 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Gestionar Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Borsi Voluntarios', 'BD249482420/gestionarBorsi.php'),
-    ('Registrar Incidencia', 'BD249772780/listar_incidencias.php'),
+    ('Mis Incidencias', 'BD249772780/listar_incidencias.php'),
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ'),
     ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
     ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver');

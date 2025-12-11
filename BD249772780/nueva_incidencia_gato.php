@@ -184,7 +184,7 @@ addBreadcrumb('Nueva Incidencia');
             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($gato['nombre']); ?></p>
             <p><strong>XIP:</strong> <?php echo $gato['numXIP'] ? htmlspecialchars($gato['numXIP']) : 'Sin XIP'; ?></p>
             <?php if ($gato['sexo']): ?>
-                <p><strong>Sexo:</strong> <?php echo ($gato['sexo'] == 'M') ? 'Macho' : 'Hembra'; ?></p>
+                <p><strong>Sexo:</strong> <?php echo ($gato['sexo'] == 'Macho') ? 'Macho' : 'Hembra'; ?></p>
             <?php endif; ?>
             <?php if ($gato['nombreColonia']): ?>
                 <p><strong>Colonia:</strong> <?php echo htmlspecialchars($gato['nombreColonia']); ?></p>
