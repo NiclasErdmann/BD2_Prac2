@@ -50,19 +50,33 @@ INSERT INTO COLONIA_FELINA (nombre, descripcion, coordenadas, lugarReferencia, n
     ('Colonia Centro', 'Gatos en el centro histórico', '40.0735,-88.2535', 'Plaza Mayor', 15, 1),
     ('Colonia Parque', 'Comunidad en el parque central', '40.0745,-88.2545', 'Parque Central', 22, 2);
 
-INSERT INTO GATO (numXIP, descripcion, foto, idCementerio) VALUES
-    ('XIP-001', 'Gato atigrado', NULL, NULL),
-    ('XIP-002', 'Gata negra', NULL, NULL),
-    ('XIP-003', 'Gato gris', NULL, 1);
+INSERT INTO GATO (numXIP, nombre, sexo, descripcion, foto, idCementerio) VALUES
+    ('XIP-001', 'Misu', 'Hembra', 'Gata atigrada, muy cariñosa', NULL, NULL),
+    ('XIP-002', 'Felix', 'Macho', 'Gato negro, tímido', NULL, NULL),
+    ('XIP-003', 'Luna', 'Hembra', 'Gata gris, sociable', NULL, NULL),
+    ('XIP-004', 'Tom', 'Macho', 'Gato blanco con manchas', NULL, NULL),
+    ('XIP-005', 'Nieve', 'Hembra', 'Gata blanca de ojos azules', NULL, NULL),
+    (NULL, 'Bigotes', 'Macho', 'Gato atigrado sin XIP aún', NULL, NULL),
+    (NULL, 'Sombra', 'Hembra', 'Gata negra muy esquiva', NULL, NULL),
+    ('XIP-006', 'Garfield', 'Macho', 'Gato naranja, falleció', NULL, 1);
 
 INSERT INTO HISTORIAL (fechaLlegada, fechaIda, idGato, idColonia) VALUES
-    ('2024-01-10', NULL, 1, 1),
-    ('2024-02-05', NULL, 2, 2),
-    ('2024-03-15', '2024-05-01', 3, 1);
+    ('2024-01-10', NULL, 1, 1),   -- Misu en Colonia Centro
+    ('2024-02-05', NULL, 2, 1),   -- Felix en Colonia Centro
+    ('2024-03-15', NULL, 3, 1),   -- Luna en Colonia Centro
+    ('2024-01-20', NULL, 4, 2),   -- Tom en Colonia Parque
+    ('2024-02-15', NULL, 5, 2),   -- Nieve en Colonia Parque
+    ('2024-03-01', NULL, 6, 2),   -- Bigotes en Colonia Parque
+    ('2024-03-10', NULL, 7, 2),   -- Sombra en Colonia Parque
+    ('2023-12-01', '2024-05-01', 8, 1);  -- Garfield estaba en Centro, falleció
 
 INSERT INTO INCIDENCIA (fecha, descripcion, tipo, idVoluntario, idGato) VALUES
-    ('2024-04-01', 'Revisión veterinaria', 'sanitaria', 1, 1),
-    ('2024-04-10', 'Nueva camada vista', 'observacion', 2, NULL);
+    ('2024-04-01', 'Misu tiene tos y estornudos', 'salud', 1, 1),
+    ('2024-04-10', 'Felix con herida en pata', 'herido', 1, 2),
+    ('2024-05-01', 'Garfield encontrado sin vida', 'fallecimiento', 1, 8),
+    ('2024-04-15', 'Tom con conjuntivitis', 'salud', 2, 4),
+    ('2024-04-20', 'Nieve desnutrida', 'salud', 2, 5),
+    ('2024-04-25', 'Sombra muy asustada', 'otro', 2, 7);
 
 INSERT INTO ROL (nombre) VALUES
     ('adminAyuntamiento'),
@@ -75,8 +89,10 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Gestionar Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Borsi Voluntarios', 'BD249482420/gestionarBorsi.php'),
-    ('Registrar Incidencia', 'AÑADIR RUTA AQUÍ'),
-    ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ');
+    ('Registrar Incidencia', 'BD249772780/listar_incidencias.php'),
+    ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ'),
+    ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
+    ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),
@@ -94,22 +110,25 @@ INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (13, 3);
 
 INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
-    (1, 1),
-    (1, 2),
-    (1, 3),
-    (1, 4),
-    (1, 5),
-    (2, 2),
-    (2, 4),
-    (3, 4),
-    (3, 4);
+    -- adminAyuntamiento puede todo
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9),
+    -- responsableGrupo puede ver y gestionar algunas cosas
+    (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9),
+    -- voluntario puede ver grupos, registrar incidencias, albiraments y ver gatos
+    (3, 4), (3, 6), (3, 8), (3, 9);
 
 INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas) VALUES
-    ('CatPlus', 'Alta', 'Rica en proteínas');
+    ('CatPlus', 'Alta', 'Rica en proteínas'),
+    ('Whiskas', 'Media', 'Comida económica y nutritiva'),
+    ('Royal Canin', 'Premium', 'Alta gama para gatos');
 
 INSERT INTO TRABAJO (descripcion, fecha, hora, estado, idMarcaComida, idColonia, idVoluntario) VALUES
-    ('Alimentación diaria', '2024-04-15', '08:00:00', 'pendiente', 1, 1, 1),
-    ('Revisión zona parque', '2024-04-16', '10:30:00', 'completado', NULL, 2, 2);
+    ('Alimentación diaria', '2024-04-15', '08:00:00', 'completado', 1, 1, 1),
+    ('Revisión zona parque', '2024-04-16', '10:30:00', 'completado', NULL, 2, 2),
+    ('Limpieza comederos', '2024-04-17', '09:00:00', 'completado', NULL, 1, 3),
+    ('Alimentación nocturna', '2024-04-17', '20:00:00', 'completado', 2, 2, 4),
+    ('Revisión general', '2024-04-18', '11:00:00', 'completado', NULL, 1, 5),
+    ('Alimentación diaria', '2024-04-19', '08:00:00', 'pendiente', 3, 2, 6);
 
 INSERT INTO CENTRO_VETERINARIO (nombre, mail, telefono, direccion) VALUES
     ('Clínica Vet Cuenca', 'contacto@vetcuenca.es', '969111222', 'Av. Castilla 10');
@@ -138,6 +157,11 @@ INSERT INTO COMENTARIO (contenidoComentario, idColonia) VALUES
     ('Requiere más refugios en invierno.', 2);
 
 INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) VALUES
-    ('2024-04-20', 1, 1),
-    ('2024-04-22', 2, 2);
+    ('2024-04-20', 1, 1),   -- Misu vista en Centro
+    ('2024-04-21', 2, 1),   -- Felix visto en Centro
+    ('2024-04-22', 3, 1),   -- Luna vista en Centro
+    ('2024-04-20', 4, 2),   -- Tom visto en Parque
+    ('2024-04-21', 5, 2),   -- Nieve vista en Parque
+    ('2024-04-22', 6, 2),   -- Bigotes visto en Parque
+    ('2024-04-23', 7, 2);   -- Sombra vista en Parque
 
