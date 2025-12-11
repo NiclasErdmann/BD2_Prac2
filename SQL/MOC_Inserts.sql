@@ -92,7 +92,8 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Registrar Incidencia', 'BD249772780/listar_incidencias.php'),
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ'),
     ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
-    ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver');
+    ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver'),
+    ('Modificacion Permisos', 'BD24550587/modifica_permisos.php');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),
@@ -111,7 +112,7 @@ INSERT INTO PER_ROL (idPersona, idRol) VALUES
 
 INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     -- adminAyuntamiento puede todo
-    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9),
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1,10),
     -- responsableGrupo puede ver y gestionar algunas cosas
     (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9),
     -- voluntario puede ver grupos, registrar incidencias, albiraments y ver gatos
