@@ -242,11 +242,11 @@ addBreadcrumb('Albirament Gato');
             font-weight: bold;
         }
         .badge-macho {
-            background-color: #007bff;
+            background-color: #6c757d;
             color: white;
         }
         .badge-hembra {
-            background-color: #e83e8c;
+            background-color: #6c757d;
             color: white;
         }
         .btn-volver {
@@ -301,8 +301,8 @@ addBreadcrumb('Albirament Gato');
                         <label for="sexo">Sexo:</label>
                         <select name="sexo" id="sexo">
                             <option value="">Todos</option>
-                            <option value="M" <?php echo ($filtroSexo == 'M') ? 'selected' : ''; ?>>Macho</option>
-                            <option value="H" <?php echo ($filtroSexo == 'H') ? 'selected' : ''; ?>>Hembra</option>
+                            <option value="Macho" <?php echo ($filtroSexo == 'Macho') ? 'selected' : ''; ?>>Macho</option>
+                            <option value="Hembra" <?php echo ($filtroSexo == 'Hembra') ? 'selected' : ''; ?>>Hembra</option>
                         </select>
                     </div>
                     <div class="filtro-item">
@@ -327,8 +327,8 @@ addBreadcrumb('Albirament Gato');
                             
                             <?php if ($gato['sexo']): ?>
                                 <strong>Sexo:</strong> 
-                                <span class="badge-sexo <?php echo ($gato['sexo'] == 'M') ? 'badge-macho' : 'badge-hembra'; ?>">
-                                    <?php echo ($gato['sexo'] == 'M') ? 'Macho' : 'Hembra'; ?>
+                                <span class="badge-sexo <?php echo ($gato['sexo'] == 'Macho') ? 'badge-macho' : 'badge-hembra'; ?>">
+                                    <?php echo ($gato['sexo'] == 'Macho') ? 'Macho' : 'Hembra'; ?>
                                 </span><br>
                             <?php endif; ?>
                             
