@@ -312,22 +312,6 @@ addBreadcrumb($textoConfig['titulo']);
             </div>
         <?php endif; ?>
 
-        <?php if ($modo == 'albirament'): ?>
-            <div class="info-box">
-                <strong>¿Cómo funciona el Albirament?</strong><br>
-                1. Usa los filtros para buscar el gato que has visto<br>
-                2. Selecciona la nueva colonia donde lo has avistado<br>
-                3. Confirma el albirament - se actualizará automáticamente el historial del gato
-            </div>
-        <?php elseif ($modo == 'incidencia'): ?>
-            <div class="info-box">
-                <strong>Registrar Incidencia</strong><br>
-                1. Busca el gato usando los filtros<br>
-                2. Haz clic en "Seleccionar para Incidencia"<br>
-                3. Completa los datos de la incidencia
-            </div>
-        <?php endif; ?>
-
         <!-- Filtros -->
         <div class="filtros-container">
             <h3>Buscar Gato</h3>

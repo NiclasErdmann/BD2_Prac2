@@ -295,7 +295,7 @@ addBreadcrumb('Albirament Gato');
                     </div>
                     <div class="filtro-item">
                         <label for="xip">Número XIP:</label>
-                        <input type="text" name="xip" id="xip" value="<?php echo htmlspecialchars($filtroXIP); ?>" placeholder="Ej: ES123">
+                        <input type="text" name="xip" id="xip" value="<?php echo htmlspecialchars($filtroXIP); ?>" placeholder="Ej: XIP-007">
                     </div>
                     <div class="filtro-item">
                         <label for="sexo">Sexo:</label>
