@@ -131,7 +131,7 @@ addBreadcrumb($colonia['nombre']);
         if ($resCats && mysqli_num_rows($resCats) > 0) {
             echo '<ul>';
             while ($g = mysqli_fetch_assoc($resCats)) {
-                echo '<li><a href="info_gato.php?id=' . (int)$g['idGato'] . '">' . htmlspecialchars($g['numXIP'] ?: ('Gato ' . (int)$g['idGato'])) . '</a> - ' . htmlspecialchars(substr($g['descripcion'], 0, 80)) . '</li>';
+                echo '<li><a href="../BD249772780/ver_gato.php?idGato=' . (int)$g['idGato'] . '">' . htmlspecialchars($g['numXIP'] ?: ('Gato ' . (int)$g['idGato'])) . '</a> - ' . htmlspecialchars(substr($g['descripcion'], 0, 80)) . '</li>';
             }
             echo '</ul>';
         } else {
