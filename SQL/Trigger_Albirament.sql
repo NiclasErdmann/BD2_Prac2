@@ -1,6 +1,6 @@
 -- Trigger para actualizar el HISTORIAL automáticamente cuando se registra un ALBIRAMENT
 
-DELIMITER $$
+DELIMITER //
 
 CREATE TRIGGER tr_ActualizarHistorial_Albirament
 BEFORE INSERT ON ALBIRAMENT
@@ -15,6 +15,6 @@ BEGIN
     -- 2. Crear nuevo registro en HISTORIAL con la nueva colonia
     INSERT INTO HISTORIAL (fechaLlegada, fechaIda, idGato, idColonia) 
     VALUES (NEW.fechaVista, NULL, NEW.idGato, NEW.idColonia);
-END$$
+END//
 
 DELIMITER ;

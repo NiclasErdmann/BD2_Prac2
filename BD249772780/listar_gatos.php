@@ -32,41 +32,25 @@ $sql = "SELECT g.idGato, g.nombre, g.numXIP, g.sexo, g.descripcion, g.foto,
         LEFT JOIN COLONIA_FELINA c ON h.idColonia = c.idColonia
         WHERE g.idCementerio IS NULL";
 
-$params = [];
-$types = "";
-
 if (!empty($filtroNombre)) {
-    $sql .= " AND g.nombre LIKE ?";
-    $params[] = "%$filtroNombre%";
-    $types .= "s";
+    $sql .= " AND g.nombre LIKE '%$filtroNombre%'";
 }
 
 if (!empty($filtroColor)) {
-    $sql .= " AND g.descripcion LIKE ?";
-    $params[] = "%$filtroColor%";
-    $types .= "s";
+    $sql .= " AND g.descripcion LIKE '%$filtroColor%'";
 }
 
 if (!empty($filtroXIP)) {
-    $sql .= " AND g.numXIP LIKE ?";
-    $params[] = "%$filtroXIP%";
-    $types .= "s";
+    $sql .= " AND g.numXIP LIKE '%$filtroXIP%'";
 }
 
 if (!empty($filtroSexo)) {
-    $sql .= " AND g.sexo = ?";
-    $params[] = $filtroSexo;
-    $types .= "s";
+    $sql .= " AND g.sexo = '$filtroSexo'";
 }
 
 $sql .= " ORDER BY g.nombre";
 
-$stmt = mysqli_prepare($con, $sql);
-if (!empty($params)) {
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
-}
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
+$resultado = mysqli_query($con, $sql);
 
 // Obtener todas las colonias para el dropdown (solo si es modo albirament)
 $resColonias = null;
@@ -402,14 +386,21 @@ addBreadcrumb($textoConfig['titulo']);
                                     ?>
                                 </select>
                                 
-                                <button type="submit" class="btn-registrar">✓ Registrar Albirament</button>
+                                <button type="submit" class="btn-registrar">Registrar Albirament</button>
                             </form>
                         <?php elseif ($modo == 'incidencia'): ?>
                             <!-- Botón para seleccionar gato para incidencia -->
                             <div class="form-incidencia">
                                 <h4>Registrar incidencia</h4>
                                 <a href="nueva_incidencia_gato.php?idGato=<?php echo $gato['idGato']; ?>&idColonia=<?php echo $gato['idColonia']; ?>" class="btn-seleccionar">
-                                    📝 Seleccionar Gato
+                                    Seleccionar Gato
+                                </a>
+                            </div>
+                        <?php elseif ($modo == 'ver'): ?>
+                            <!-- Botón para ver ficha completa del gato -->
+                            <div style="margin-top: 15px;">
+                                <a href="ver_gato.php?idGato=<?php echo $gato['idGato']; ?>" class="btn-seleccionar">
+                                    Ver Ficha Completa
                                 </a>
                             </div>
                         <?php endif; ?>
