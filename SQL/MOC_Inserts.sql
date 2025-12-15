@@ -93,7 +93,8 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ'),
     ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
     ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver'),
-    ('Modificacion Permisos', 'BD24550587/modifica_permisos.php');
+    ('Modificacion Permisos', 'BD24550587/modifica_permisos.php'),
+    ('Consulta Mis Tareas', 'BD24550587/consulta_lista_tareas.php');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),
@@ -112,24 +113,28 @@ INSERT INTO PER_ROL (idPersona, idRol) VALUES
 
 INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     -- adminAyuntamiento puede todo
-    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1,10),
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1,10), (1,11),
     -- responsableGrupo puede ver y gestionar algunas cosas
-    (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9),
+    (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9), (2,11),
     -- voluntario puede ver grupos, registrar incidencias, albiraments y ver gatos
-    (3, 4), (3, 6), (3, 8), (3, 9);
+    (3, 4), (3, 6), (3, 8), (3, 9), (3,11);
 
 INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas) VALUES
     ('CatPlus', 'Alta', 'Rica en proteínas'),
     ('Whiskas', 'Media', 'Comida económica y nutritiva'),
     ('Royal Canin', 'Premium', 'Alta gama para gatos');
 
-INSERT INTO TRABAJO (descripcion, fecha, hora, estado, idMarcaComida, idColonia, idVoluntario) VALUES
-    ('Alimentación diaria', '2024-04-15', '08:00:00', 'completado', 1, 1, 1),
-    ('Revisión zona parque', '2024-04-16', '10:30:00', 'completado', NULL, 2, 2),
-    ('Limpieza comederos', '2024-04-17', '09:00:00', 'completado', NULL, 1, 3),
-    ('Alimentación nocturna', '2024-04-17', '20:00:00', 'completado', 2, 2, 4),
-    ('Revisión general', '2024-04-18', '11:00:00', 'completado', NULL, 1, 5),
-    ('Alimentación diaria', '2024-04-19', '08:00:00', 'pendiente', 3, 2, 6);
+INSERT INTO TRABAJO (descripcion, fecha, hora, estado, comentario, idMarcaComida, idColonia, idVoluntario) VALUES
+    ('Alimentación diaria', '2024-04-15', '08:00:00', 'completado', "los informaticos son muy creativos", 1, 1, 1),
+    ('Alimentación diaria', '2024-04-16', '08:00:00', 'completado', NULL, 1, 1, 1),
+    ('Alimentación diaria', '2024-04-17', '08:00:00', 'pendiente', NULL, 1, 1, 1),
+    ('Alimentación diaria', '2024-04-18', '08:00:00', 'pendiente', NULL, 1, 1, 1),
+    ('Alimentación diaria', '2024-04-18', '16:00:00', 'pendiente', NULL, 1, 1, 1),
+    ('Revisión zona parque', '2024-04-16', '10:30:00', 'completado', NULL, NULL, 2, 2),
+    ('Limpieza comederos', '2024-04-17', '09:00:00', 'completado', NULL, NULL, 1, 3),
+    ('Alimentación nocturna', '2024-04-17', '20:00:00', 'completado', "era de noche", 2, 2, 4),
+    ('Revisión general', '2024-04-18', '11:00:00', 'completado', NULL, NULL, 1, 5),
+    ('Alimentación diaria', '2024-04-19', '08:00:00', 'pendiente', NULL, 3, 2, 6);
 
 INSERT INTO CENTRO_VETERINARIO (nombre, mail, telefono, direccion) VALUES
     ('Clínica Vet Cuenca', 'contacto@vetcuenca.es', '969111222', 'Av. Castilla 10');

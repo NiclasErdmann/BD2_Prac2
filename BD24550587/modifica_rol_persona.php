@@ -18,8 +18,6 @@ if (!isset($_SESSION['idPersona'])) {
 $usuario= $_GET["usuario"];
 
 // ver usuarios y sus roles
-$con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
 
 
 $consulta=" SELECT f.nombre as funcion, r.nombre as rol

@@ -49,7 +49,7 @@ La página de listado muestra:
 
 ### Información Importante
 
-> ⚠️ **Solo se muestran colonias del tu ayuntamiento**. Si tu ayuntamiento no tiene colonias registradas, verás el mensaje: "No hay colonias registradas en tu ayuntamiento"
+> ⚠️ **Solo se muestran colonias de tu ayuntamiento**. Si tu ayuntamiento no tiene colonias registradas, verás el mensaje: "No hay colonias registradas en tu ayuntamiento"
 
 ---
 

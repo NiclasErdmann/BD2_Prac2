@@ -18,9 +18,6 @@ if (!isset($_SESSION['idPersona'])) {
 $rol= $_GET["rol"];
 
 
-$con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
-
 
 // funciones que se tiene permiso
 $consulta=" SELECT f.nombre as funcion

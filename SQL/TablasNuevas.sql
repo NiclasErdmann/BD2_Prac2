@@ -193,6 +193,7 @@ CREATE TABLE TRABAJO(
     fecha DATE,
     hora TIME,
     estado VARCHAR(100),
+    comentario VARCHAR(400),
     idMarcaComida INT,
     idColonia INT NOT NULL,
     idVoluntario INT NOT NULL,
