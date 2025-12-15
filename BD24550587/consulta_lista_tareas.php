@@ -28,6 +28,7 @@ echo
     th, td {
         text-align: left;
         padding: 8px;
+        border: 1px solid black;
     }
 
     tr:nth-child(even) {

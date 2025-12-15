@@ -26,6 +26,7 @@ echo
     th, td {
         text-align: left;
         padding: 8px;
+        border: 1px solid black;
     }
 
     tr:nth-child(even) {
@@ -36,7 +37,9 @@ echo
 // ver tarea
 $tarea= $_GET["tarea"];
 
-$consulta=" SELECT t.descripcion, fecha, hora, estado, t.idMarcaComida, c.nombre as nombreColonia, c.idColonia, t.comentario
+$consulta=" SELECT  t.descripcion, fecha, hora, estado, c.nombre as nombreColonia, c.idColonia, t.comentario, 
+                    c.numeroGatos, m.nombre as nombreComida, m.calidad as calidadComida,
+                    m.caracteristicas as caracteristicasComida, m.idMarcaComida, m.pesoPorGato
             FROM TRABAJO t
             JOIN COLONIA_FELINA c ON c.idColonia = t.idColonia
             JOIN MARCACOMIDA m ON m.idMarcaComida = t.idMarcaComida
@@ -53,14 +56,50 @@ if(is_null($registre)){
     $cad= 'No se encontraro la tarea';
     echo $cad;
 }else{
-    $cad=   '<table>'.
-            '<tr> <th>Descripcion</th>      <th>'.$registre["descripcion"].'   </th> <t/r>'.
-            '<tr> <th>Fecha:</th>           <th>'.$registre["fecha"].'         </th> <t/r>'.
-            '<tr> <th>Hora:</th>            <th>'.$registre["hora"].'          </th> <t/r>'.
-            '<tr> <th>Nombre Colonia:</th>  <th><a href="../BD249482420/info_colonia.php?id='.$registre["idColonia"].'" >'.$registre["nombreColonia"].'</a> </th> <t/r>'.
-            '<tr> <th>Estado:</th>          <th>'.$registre["estado"].'        </th> <t/r>'.
-            '</table>';
+    //descripcion basica de la tarea
+    $cad=   '<p><table>'.
+                '<tr> <th>Descripcion</th>      <th>'.$registre["descripcion"].'   </th> <t/r>'.
+                '<tr> <th>Fecha:</th>           <th>'.$registre["fecha"].'         </th> <t/r>'.
+                '<tr> <th>Hora:</th>            <th>'.$registre["hora"].'          </th> <t/r>'.
+                '<tr> <th>Nombre Colonia:</th>  <th><a href="../BD249482420/info_colonia.php?id='.$registre["idColonia"].'" >'.$registre["nombreColonia"].'</a> </th> <t/r>'.
+                '<tr> <th>Estado:</th>          <th>'.$registre["estado"].'        </th> <t/r>'.
+            '</table></p>';
     echo $cad;
+
+    //comida en caso de que se trate de una tarea de dar de comer.
+    if($registre["idMarcaComida"] != NULL){
+        $cad='
+            <p><table>
+                <tr> 
+                    <th>Colonia:</th>
+                    <th>'.$registre["nombreColonia"].'</th>
+                    <th>Numero de Gatos:</th>
+                    <th>'.$registre["numeroGatos"].'</th>
+                    <th>Peso de comida total / dia (gramos):</th>
+                    <th>'.$registre["numeroGatos"]*$registre["pesoPorGato"].'</th>
+                <t/r>
+            </table></p>
+
+            <p><table>
+            <tr> 
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Calidad Comida</th>
+                    <th>Caracteristicas Comida</th>
+                    <th>Peso Por Gato</th>
+                <t/r>
+                <tr> 
+                    <th>Comida</th>
+                    <th>'.$registre["nombreComida"].'</th>
+                    <th>'.$registre["calidadComida"].'</th>
+                    <th>'.$registre["caracteristicasComida"].'</th>
+                    <th>'.$registre["pesoPorGato"].'</th>
+                <t/r>
+            </table></p>';
+    echo $cad;
+    }
+
+
     if($registre["estado"] == "pendiente" || $registre["estado"] == NULL){
         //trabajo pendiente
         ?>

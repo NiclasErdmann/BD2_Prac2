@@ -119,10 +119,10 @@ INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     -- voluntario puede ver grupos, registrar incidencias, albiraments y ver gatos
     (3, 4), (3, 6), (3, 8), (3, 9), (3,11);
 
-INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas) VALUES
-    ('CatPlus', 'Alta', 'Rica en proteínas'),
-    ('Whiskas', 'Media', 'Comida económica y nutritiva'),
-    ('Royal Canin', 'Premium', 'Alta gama para gatos');
+INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas, pesoPorGato) VALUES
+    ('CatPlus', 'Alta', 'Rica en proteínas', 100),
+    ('Whiskas', 'Media', 'Comida económica y nutritiva', 150),
+    ('Royal Canin', 'Premium', 'Alta gama para gatos', 125);
 
 INSERT INTO TRABAJO (descripcion, fecha, hora, estado, comentario, idMarcaComida, idColonia, idVoluntario) VALUES
     ('Alimentación diaria', '2024-04-15', '08:00:00', 'completado', "los informaticos son muy creativos", 1, 1, 1),

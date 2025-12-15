@@ -181,6 +181,7 @@ CREATE TABLE MARCACOMIDA(
     idMarcaComida INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(200),
     calidad VARCHAR(200),
+    pesoPorGato tinyint, -- mas de 255g de comida por gato por dia???? gordo
     caracteristicas TEXT
 );
 
