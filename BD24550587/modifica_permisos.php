@@ -57,7 +57,7 @@ if(is_null($registre)){
     echo "<table>";
         echo "<tr>";
         
-        $cad=   '<th><a href="'.'modifica_rol_persona.php?id='.$registre["usuario"].'"> '.$registre["usuario"].' </a></th>'.
+        $cad=   '<th><a href="'.'modifica_rol_persona.php?usuario='.$registre["usuario"].'"> '.$registre["usuario"].' </a></th>'.
                 '<th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>';
         echo $cad;
         echo "</tr>";

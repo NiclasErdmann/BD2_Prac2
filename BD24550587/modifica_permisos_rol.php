@@ -38,17 +38,17 @@ echo
 $rol= $_GET["rol"];
 
 // funciones que se tiene permiso
-$consulta=" SELECT f.nombre as funcion
+$consulta=" SELECT f.nombre as funcion, ph.idRol, ph.idFuncion
                 FROM ROL r
                 JOIN PUEDEHACER ph ON r.idRol = ph.idRol
                 JOIN FUNCION f ON ph.idFuncion = f.idFuncion
             WHERE r.nombre='$rol'
             ";
 
+
 $resultat = mysqli_query($con, $consulta);
-
 $registre = mysqli_fetch_array($resultat);
-
+$idRol=$registre["idRol"];
 
 //tite
 echo '<h1>Permisos del rol "'.$rol.'"</h1>';
@@ -63,12 +63,12 @@ if(is_null($registre)){
         <table>
             <tr>
                 <th>'.$registre["funcion"].'</th>
-                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>
+                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'&idRol='.$idRol.'&funcion='.$registre["idFuncion"].'"> eliminar </a></th>
             </tr>';
     while ($registre=mysqli_fetch_array($resultat)) {
         echo '<tr>
                 <th>'.$registre["funcion"].'</th>
-                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>
+                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'&idRol='.$idRol.'&funcion='.$registre["idFuncion"].'"> eliminar </a></th>
             </tr>';
     }
     echo '</table></p>';
@@ -76,11 +76,11 @@ if(is_null($registre)){
 
 
 // funciones que no se tienen permiso
-$consulta=" SELECT f.nombre as funcion
+$consulta=" SELECT f.nombre as funcion, f.idFuncion, i.idRol
                	FROM FUNCION f
                 LEFT JOIN 
                 (
-                    SELECT f.idFuncion as id
+                    SELECT f.idFuncion as id, r.idRol
                 	FROM ROL r
                 	JOIN PUEDEHACER ph ON r.idRol = ph.idRol
                 	JOIN FUNCION f ON ph.idFuncion = f.idFuncion
@@ -91,7 +91,6 @@ $consulta=" SELECT f.nombre as funcion
             ";
 
 $resultat = mysqli_query($con, $consulta);
-
 $registre = mysqli_fetch_array($resultat);
 
 if(is_null($registre)){
@@ -104,12 +103,12 @@ if(is_null($registre)){
         <table>
             <tr>
                 <th>'.$registre["funcion"].'</th>
-                <th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>
+                <th><a href="'.'anyade_funcion_rol.php?rol='.$rol.'&idRol='.$idRol.'&funcion='.$registre["idFuncion"].'"> añadir </a></th>
             </tr>';
     while ($registre=mysqli_fetch_array($resultat)) {
         echo '<tr>
                 <th>'.$registre["funcion"].'</th>
-                <th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>
+                <th><a href="'.'anyade_funcion_rol.php?rol='.$rol.'&idRol='.$idRol.'&funcion='.$registre["idFuncion"].'"> añadir </a></th>
             </tr>';
     }
     echo '</table></p>';

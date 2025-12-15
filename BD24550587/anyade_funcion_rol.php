@@ -36,24 +36,27 @@ echo
 
 
 $rol= $_GET["rol"];
-$funcion= $_GET["funcion"];
+$idRol= $_GET["idRol"];
+$idFunc= $_GET["funcion"];
 
 
 // funciones que se anyade al rol
 $consulta=' INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
-            ('.$rol.','.$funcion.');
+            ('.$idRol.','.$idFunc.');
             ';
-
 //transaction
 try{
     $con->begin_transaction();
     $resultat = mysqli_query($con, $consulta);
     $con->commit();
-    echo '<p>La operacion se ha realizado correctamente</p>'
+    echo '<p>La operacion se ha realizado correctamente</p>';
     //volver
-    echo'<p><button onclick="document.location=\'consulta_lista_tareas.php\'">Volver</button></p>';
-}catch{
-
+    echo'<p><button onclick="document.location=\'modifica_permisos_rol.php?rol='.$rol.'\'">Volver</button></p>';
+}catch( \Throwable $error ){
+    $con->rollback(); 
+    echo '<p>La operacion no se ha podido realizar</p>';
+    //volver
+    echo'<p><button onclick="document.location=\'modifica_permisos_rol.php?rol='.$rol.'\'">Volver</button></p>';
 }
 
 mysqli_close($con);

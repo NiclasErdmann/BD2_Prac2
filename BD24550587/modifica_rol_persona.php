@@ -37,8 +37,10 @@ echo
 
 $usuario= $_GET["usuario"];
 
-// ver usuarios y sus roles
+//tite
+echo '<h1>Permisos del usuario: '.$usuario.'</h1>';
 
+// ver usuarios y sus roles
 
 $consulta=" SELECT f.nombre as funcion, r.nombre as rol
                 FROM PERSONA p
@@ -62,17 +64,15 @@ if(is_null($registre)){
     echo "<table>";
         echo "<tr>";
         
-        $cad=   '<th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>'.
-                '<th>'.$registre["funcion"].'</th>';
-        echo $cad;
-        echo "</tr>";
+         echo '<tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>
+            </tr>';
     while ($registre=mysqli_fetch_array($resultat)) {
-        echo "<tr>";
-        
-        $cad=   '<th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>'.
-                '<th>'.$registre["funcion"].'</th>';
-        echo $cad;
-        echo "</tr>";
+        echo '<tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>
+            </tr>';
     }
 }
 
