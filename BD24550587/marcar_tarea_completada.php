@@ -13,7 +13,6 @@ $con = mysqli_connect("localhost","root","");
 $db = mysqli_select_db($con,"bd2_prac2");
 
 $consulta="
-
         UPDATE TRABAJO t
         SET estado = 'completado', comentario = '".$comentario."'
         WHERE t.idTrabajo = ".$tarea.";

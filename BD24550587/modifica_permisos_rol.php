@@ -15,9 +15,27 @@ if (!isset($_SESSION['idPersona'])) {
     die('Error: Debes iniciar sesión. <a href="../login.html">Ir al login</a>');
 }
 
+//style
+echo 
+"<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    tr:nth-child(even) {
+        background-color: #D6EEEE;
+    }
+</style>";
+
+
 $rol= $_GET["rol"];
-
-
 
 // funciones que se tiene permiso
 $consulta=" SELECT f.nombre as funcion
@@ -31,29 +49,29 @@ $resultat = mysqli_query($con, $consulta);
 
 $registre = mysqli_fetch_array($resultat);
 
+
+//tite
+echo '<h1>Permisos del rol "'.$rol.'"</h1>';
+
 if(is_null($registre)){
     // rol no tiene funciones asignadas
-    $cad= 'Este rol no tiene funciones asignadas';
-    echo $cad;
+    //$cad= 'Este rol no tiene funciones asignadas';
+    //echo $cad;
 }else{
 
-    echo "<table>";
-        echo "<tr>";
-        
-        $cad=   '<th>'.$registre["funcion"].'</th>'.
-                '<th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>';
-        echo $cad;
-
-        echo "</tr>";
+    echo '<p> <b>Funciones asignadas:</b>
+        <table>
+            <tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>
+            </tr>';
     while ($registre=mysqli_fetch_array($resultat)) {
-        echo "<tr>";
-        
-        $cad=   '<th>'.$registre["funcion"].'</th>'.
-                '<th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>';
-        echo $cad;
-
-        echo "</tr>";
+        echo '<tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'eliminar_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> eliminar </a></th>
+            </tr>';
     }
+    echo '</table></p>';
 }
 
 
@@ -78,27 +96,23 @@ $registre = mysqli_fetch_array($resultat);
 
 if(is_null($registre)){
     // rol tiene todas las funciones asignadas
-    $cad= 'Este rol tiene todas las funciones asignadas';
-    echo $cad;
+    //$cad= 'Este rol tiene todas las funciones asignadas';
+    //echo $cad;
 }else{
 
-    echo "<table>";
-        echo "<tr>";
-        
-        $cad=   '<th>'.$registre["funcion"].'</th>'.
-                '<th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>';
-        echo $cad;
-
-        echo "</tr>";
+    echo '<p> <b>Funciones NO asignadas:</b>
+        <table>
+            <tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>
+            </tr>';
     while ($registre=mysqli_fetch_array($resultat)) {
-        echo "<tr>";
-        
-        $cad=   '<th>'.$registre["funcion"].'</th>'.
-                '<th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>';
-        echo $cad;
-
-        echo "</tr>";
+        echo '<tr>
+                <th>'.$registre["funcion"].'</th>
+                <th><a href="'.'anyadir_funcion_rol.php?rol='.$rol.'?funcion='.$registre["funcion"].'"> añadir </a></th>
+            </tr>';
     }
+    echo '</table></p>';
 }
 
 

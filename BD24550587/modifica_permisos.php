@@ -15,10 +15,29 @@ if (!isset($_SESSION['idPersona'])) {
     die('Error: Debes iniciar sesión. <a href="../login.html">Ir al login</a>');
 }
 
+//style
+echo 
+"<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    tr:nth-child(even) {
+        background-color: #D6EEEE;
+    }
+</style>";
+
+//tite
+echo '<h1>Roles de los usuarios</h1>';
 
 // ver usuarios y sus roles
-
 $consulta=" SELECT p.usuario as usuario, r.nombre as rol
                 FROM PERSONA p
                 JOIN PER_ROL pr ON p.idPersona = pr.idPersona
