@@ -131,49 +131,230 @@ addBreadcrumb($accion === 'crear' ? 'Crear Grupo de Trabajo' : 'Editar Grupo');
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $accion === 'crear' ? 'Crear Grupo de Trabajo' : 'Editar Grupo de Trabajo'; ?></title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        form { max-width: 640px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input[type="text"], textarea, select { width: 100%; padding: 8px; margin-top: 5px; }
-        button { margin-top: 20px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        .cancelar { margin-left: 10px; padding: 10px 20px; background-color: #f44336; color: white; text-decoration: none; display: inline-block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header-section {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+            margin-top: 8px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 24px;
+            padding: 12px 0;
+        }
+        
+        .form-container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e8e8e8;
+        }
+        
+        .form-group {
+            margin-bottom: 28px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: #333;
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.6;
+        }
+        
+        ::placeholder {
+            color: #999;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e8e8e8;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: #4a90e2;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .btn-primary:hover {
+            background-color: #357abd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #666;
+            border: 1px solid #d0d0d0;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e8e8e8;
+            color: #333;
+        }
+        
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            padding-right: 40px;
+        }
+        
+        .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
     </style>
 </head>
 <body>
-    <?php displayBreadcrumbs(); ?>
+    <div class="container">
+        <?php displayBreadcrumbs(); ?>
 
-    <h2><?php echo $accion === 'crear' ? 'Crear Nuevo Grupo de Trabajo' : 'Editar Grupo de Trabajo'; ?></h2>
+        <div class="header-section">
+            <h1><?php echo $accion === 'crear' ? 'Crear Nuevo Grupo de Trabajo' : 'Editar Grupo de Trabajo'; ?></h1>
+            <p class="subtitle">
+                <?php echo $accion === 'crear' 
+                    ? 'Completa los datos para crear un nuevo grupo de trabajo' 
+                    : 'Modifica la información del grupo de trabajo'; ?>
+            </p>
+        </div>
 
-    <form action="grupo_accion.php" method="POST">
-        <input type="hidden" name="accion" value="<?php echo $accion; ?>">
-        <input type="hidden" name="guardar" value="1">
-        <?php if ($accion === 'editar'): ?>
-            <input type="hidden" name="idGrupoTrabajo" value="<?php echo $grupo['idGrupoTrabajo']; ?>">
-        <?php endif; ?>
-        
-        <label for="nombre">Nombre del Grupo:</label>
-        <input type="text" id="nombre" name="nombre" required value="<?php echo htmlspecialchars($grupo['nombre']); ?>" placeholder="Ej: Grupo Zona Norte">
+        <div class="form-container">
+            <form action="grupo_accion.php" method="POST">
+                <input type="hidden" name="accion" value="<?php echo $accion; ?>">
+                <input type="hidden" name="guardar" value="1">
+                <?php if ($accion === 'editar'): ?>
+                    <input type="hidden" name="idGrupoTrabajo" value="<?php echo $grupo['idGrupoTrabajo']; ?>">
+                <?php endif; ?>
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre del Grupo<span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        required 
+                        value="<?php echo htmlspecialchars($grupo['nombre']); ?>" 
+                        placeholder="Ej: Grupo Zona Norte">
+                </div>
 
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe la zona de actuación o notas importantes..."><?php echo htmlspecialchars($grupo['descripcion']); ?></textarea>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea 
+                        id="descripcion" 
+                        name="descripcion" 
+                        placeholder="Describe la zona de actuación o notas importantes..."><?php echo htmlspecialchars($grupo['descripcion']); ?></textarea>
+                </div>
 
-        <label for="idResponsable">Asignar Responsable (opcional):</label>
-        <select id="idResponsable" name="idResponsable">
-            <option value="">-- Sin asignar --</option>
-            <?php while ($vol = mysqli_fetch_assoc($resultadoVol)): ?>
-                <option value="<?php echo $vol['idVoluntario']; ?>" <?php echo ($vol['idVoluntario'] == $grupo['idResponsable']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($vol['nombre'] . ' ' . $vol['apellido']); ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
+                <div class="form-group">
+                    <label for="idResponsable">Asignar Responsable</label>
+                    <select id="idResponsable" name="idResponsable">
+                        <option value="">-- Sin asignar --</option>
+                        <?php while ($vol = mysqli_fetch_assoc($resultadoVol)): ?>
+                            <option value="<?php echo $vol['idVoluntario']; ?>" <?php echo ($vol['idVoluntario'] == $grupo['idResponsable']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($vol['nombre'] . ' ' . $vol['apellido']); ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
 
-        <button type="submit"><?php echo $accion === 'crear' ? 'Guardar Grupo' : 'Actualizar Grupo'; ?></button>
-        <a href="<?php echo $accion === 'crear' ? 'listar_grupoTrabajo.php' : 'info_grupoTrabajo.php?id=' . $grupo['idGrupoTrabajo']; ?>" class="cancelar">Cancelar</a>
-    </form>
-
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <?php echo $accion === 'crear' ? 'Guardar Grupo' : 'Actualizar Grupo'; ?>
+                    </button>
+                    <a href="<?php echo $accion === 'crear' ? 'listar_grupoTrabajo.php' : 'info_grupoTrabajo.php?id=' . $grupo['idGrupoTrabajo']; ?>" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 

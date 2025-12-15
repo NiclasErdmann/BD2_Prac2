@@ -70,71 +70,215 @@ addBreadcrumb('Mis Colonias');
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Colonias</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 0;
         }
-        th {
-            background-color: #f2f2f2;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-        a {
-            color: blue;
+        
+        .header-section {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .action-bar {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4a90e2;
+            color: #ffffff;
             text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
+        
+        .btn:hover {
+            background-color: #357abd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+            transform: translateY(-1px);
+        }
+        
+        .table-container {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e8e8e8;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8f9fa;
+        }
+        
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        tbody tr {
+            transition: background-color 0.15s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
         a:hover {
+            color: #357abd;
             text-decoration: underline;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            font-size: 1.1rem;
+        }
+        
+        .unassigned {
+            color: #999;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 24px;
+            padding: 12px 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f0f0f0;
+            color: #666;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <?php displayBreadcrumbs(); ?>
-    
-    <h2>Mis Colonias (Ayuntamiento de <?php echo htmlspecialchars($nombreAyuntamiento); ?>)</h2>
-    <?php if ($puedeModificar): ?>
-        <a href="colonia_accion.php?accion=crear">
-            <button>Crear Nueva Colonia</button>
-        </a>
-    <?php endif; ?>
-    <br><br>
+    <div class="container">
+        <?php displayBreadcrumbs(); ?>
+        
+        <div class="header-section">
+            <h1>Mis Colonias</h1>
+            <p class="subtitle">Ayuntamiento de <?php echo htmlspecialchars($nombreAyuntamiento); ?></p>
+        </div>
+        
+        <?php if ($puedeModificar): ?>
+        <div class="action-bar">
+            <a href="colonia_accion.php?accion=crear" class="btn">+ Crear Nueva Colonia</a>
+        </div>
+        <?php endif; ?>
 
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Ubicación</th>
-            <th>Grupo de Trabajo</th>
-            <th>Número de Gatos</th>
-        </tr>
-
-        <?php
-        // Mostrar cada colonia
-        if (mysqli_num_rows($resultado) > 0) {
-            while($fila = mysqli_fetch_assoc($resultado)) {
-                echo "<tr>";
-                echo "<td><a href='info_colonia.php?id=" . $fila['idColonia'] . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
-                echo "<td>" . htmlspecialchars($fila['lugarReferencia']) . "</td>";
-                echo "<td>";
-                if (!empty($fila['idGrupoTrabajo'])) {
-                    echo "<a href='info_grupoTrabajo.php?id=" . $fila['idGrupoTrabajo'] . "'>" . htmlspecialchars($fila['nombreGrupo']) . "</a>";
-                } else {
-                    echo "<i>Sin asignar</i>";
-                }
-                echo "</td>";
-                echo "<td>" . $fila['numeroGatos'] . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='3' style='text-align: center;'>No hay colonias registradas en tu ayuntamiento.</td></tr>";
-        }
-        ?>
-    </table>
-
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Grupo de Trabajo</th>
+                        <th>Número de Gatos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Mostrar cada colonia
+                    if (mysqli_num_rows($resultado) > 0) {
+                        while($fila = mysqli_fetch_assoc($resultado)) {
+                            echo "<tr>";
+                            echo "<td><a href='info_colonia.php?id=" . $fila['idColonia'] . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
+                            echo "<td>" . htmlspecialchars($fila['lugarReferencia']) . "</td>";
+                            echo "<td>";
+                            if (!empty($fila['idGrupoTrabajo'])) {
+                                echo "<a href='info_grupoTrabajo.php?id=" . $fila['idGrupoTrabajo'] . "'>" . htmlspecialchars($fila['nombreGrupo']) . "</a>";
+                            } else {
+                                echo "<span class='unassigned'>Sin asignar</span>";
+                            }
+                            echo "</td>";
+                            echo "<td><span class='badge'>" . $fila['numeroGatos'] . " gatos</span></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='empty-state'>No hay colonias registradas en tu ayuntamiento</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
 

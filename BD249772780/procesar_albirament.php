@@ -34,22 +34,15 @@ $fechaActual = date('Y-m-d');
 // 2. Crear nuevo registro en HISTORIAL con la nueva colonia
 // Solo necesitamos insertar en ALBIRAMENT y el trigger hace el resto
 
-try {
-    $sqlAlbirament = "INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) 
-                     VALUES (?, ?, ?)";
-    
-    $stmtAlbirament = mysqli_prepare($con, $sqlAlbirament);
-    mysqli_stmt_bind_param($stmtAlbirament, "sii", $fechaActual, $idGato, $idColoniaNueva);
-    mysqli_stmt_execute($stmtAlbirament);
-    mysqli_stmt_close($stmtAlbirament);
-    
-    // Redirigir con éxito
+$sqlAlbirament = "INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) 
+                 VALUES ('$fechaActual', $idGato, $idColoniaNueva)";
+
+if (mysqli_query($con, $sqlAlbirament)) {
     mysqli_close($con);
     header('Location: listar_gatos.php?modo=albirament&success=1');
     exit;
-    
-} catch (Exception $e) {
+} else {
     mysqli_close($con);
-    die("Error al registrar el albirament: " . $e->getMessage() . " <br><a href='albirament_gato.php'>Volver</a>");
+    die("Error al registrar el albirament: " . mysqli_error($con) . " <br><a href='albirament_gato.php'>Volver</a>");
 }
 ?>

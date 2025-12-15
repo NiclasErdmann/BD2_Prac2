@@ -28,21 +28,14 @@ $fecha = date('Y-m-d');
 
 // Insertar la incidencia
 $sql = "INSERT INTO INCIDENCIA (descripcion, fecha, tipo, idGato, idVoluntario) 
-        VALUES (?, ?, ?, ?, ?)";
+        VALUES ('$descripcion', '$fecha', '$tipo', $idGato, $idVoluntario)";
 
-$stmt = mysqli_prepare($con, $sql);
-mysqli_stmt_bind_param($stmt, "sssii", $descripcion, $fecha, $tipo, $idGato, $idVoluntario);
-
-if (mysqli_stmt_execute($stmt)) {
-    // Éxito: redirigir al listado con mensaje
-    mysqli_stmt_close($stmt);
+if (mysqli_query($con, $sql)) {
     mysqli_close($con);
     header('Location: listar_incidencias.php?success=1');
     exit;
 } else {
-    // Error
     $error = mysqli_error($con);
-    mysqli_stmt_close($stmt);
     mysqli_close($con);
     die("Error al registrar la incidencia: $error <br><a href='nueva_incidencia.php'>Volver</a>");
 }
