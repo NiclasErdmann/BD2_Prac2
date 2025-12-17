@@ -171,3 +171,13 @@ INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) VALUES
     ('2024-04-22', 6, 2),   -- Bigotes visto en Parque
     ('2024-04-23', 7, 2);   -- Sombra vista en Parque
 
+INSERT INTO FUNCION (nombre, ruta) VALUES ('Registrar Gato', 'BD243468864/crear_gato.php');
+
+-- Autorizar al Administrador (Rol 1)
+INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (1, 12);
+
+-- Autorizar al Responsable de Grupo (Rol 2)
+INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (2, 12);
+
+-- Autorizar al Voluntario común (Rol 3)
+INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (3, 12);
