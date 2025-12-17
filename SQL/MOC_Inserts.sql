@@ -90,7 +90,7 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Borsi Voluntarios', 'BD249482420/gestionarBorsi.php'),
     ('Mis Incidencias', 'BD249772780/listar_incidencias.php'),
-    ('Planificar Trabajo', 'AÑADIR RUTA AQUÍ'),
+    ('Planificar Trabajo', 'BD249772780/planificar_trabajo.php'),
     ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
     ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver'),
     ('Modificacion Permisos', 'BD24550587/modifica_permisos.php'),

@@ -318,7 +318,7 @@ addBreadcrumb('Albirament Gato');
             <div class="gatos-grid">
                 <?php while ($gato = mysqli_fetch_assoc($resultado)): ?>
                     <div class="gato-card">
-                        <h3>🐱 <?php echo htmlspecialchars($gato['nombre']); ?></h3>
+                        <h3><?php echo htmlspecialchars($gato['nombre']); ?></h3>
                         
                         <div class="gato-info">
                             <?php if ($gato['numXIP']): ?>
@@ -348,24 +348,40 @@ addBreadcrumb('Albirament Gato');
                             <input type="hidden" name="idGato" value="<?php echo $gato['idGato']; ?>">
                             
                             <label for="nuevaColonia_<?php echo $gato['idGato']; ?>">Nueva colonia donde lo has visto:</label>
-                            <select name="idColoniaNueva" id="nuevaColonia_<?php echo $gato['idGato']; ?>" required>
-                                <option value="">-- Selecciona colonia --</option>
+                            <input type="text" list="colonias_<?php echo $gato['idGato']; ?>" name="coloniaInput_<?php echo $gato['idGato']; ?>" id="nuevaColonia_<?php echo $gato['idGato']; ?>" placeholder="Escribe para buscar..." required style="width: 100%; padding: 8px; border: 1px solid #ddd; margin-bottom: 10px;">
+                            <input type="hidden" name="idColoniaNueva" id="idColoniaNueva_<?php echo $gato['idGato']; ?>">
+                            <datalist id="colonias_<?php echo $gato['idGato']; ?>">
                                 <?php 
                                 mysqli_data_seek($resColonias, 0);
                                 while ($col = mysqli_fetch_assoc($resColonias)): 
-                                    // No mostrar la colonia actual
                                     if ($col['idColonia'] != $gato['idColonia']):
                                 ?>
-                                    <option value="<?php echo $col['idColonia']; ?>">
-                                        <?php echo htmlspecialchars($col['nombre']); ?>
-                                    </option>
+                                    <option value="<?php echo htmlspecialchars($col['nombre']); ?>" data-id="<?php echo $col['idColonia']; ?>">
                                 <?php 
                                     endif;
                                 endwhile; 
                                 ?>
-                            </select>
+                            </datalist>
+                            <script>
+                            document.getElementById('nuevaColonia_<?php echo $gato['idGato']; ?>').addEventListener('input', function() {
+                                var input = this.value;
+                                var datalist = document.getElementById('colonias_<?php echo $gato['idGato']; ?>');
+                                var options = datalist.querySelectorAll('option');
+                                var found = false;
+                                for (var i = 0; i < options.length; i++) {
+                                    if (options[i].value === input) {
+                                        document.getElementById('idColoniaNueva_<?php echo $gato['idGato']; ?>').value = options[i].getAttribute('data-id');
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if (!found) {
+                                    document.getElementById('idColoniaNueva_<?php echo $gato['idGato']; ?>').value = '';
+                                }
+                            });
+                            </script>
                             
-                            <button type="submit" class="btn-registrar">✓ Registrar Albirament</button>
+                            <button type="submit" class="btn-registrar">Registrar Albirament</button>
                         </form>
                     </div>
                 <?php endwhile; ?>

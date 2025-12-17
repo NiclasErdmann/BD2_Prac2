@@ -216,7 +216,7 @@ addBreadcrumb('Nueva Incidencia');
                 <input type="hidden" name="idVoluntario" value="<?php echo $idVoluntario; ?>">
 
                 <div class="form-paso">
-                    <h3>📝 Paso 2: Datos de la incidencia</h3>
+                    <h3>Paso 2: Datos de la incidencia</h3>
 
                     <div class="form-group">
                         <label for="descripcion">Descripción <span class="required">*</span></label>
@@ -229,9 +229,9 @@ addBreadcrumb('Nueva Incidencia');
                         <select name="tipo" id="tipo" required>
                             <option value="">-- Selecciona un tipo --</option>
                             <option value="salud">🏥 Problema de salud</option>
-                            <option value="herido">🩹 Herida</option>
-                            <option value="fallecimiento">💀 Fallecimiento</option>
-                            <option value="enfermedad">🦠 Enfermedad</option>
+                            <option value="herido">Herida</option>
+                            <option value="fallecimiento">Fallecimiento</option>
+                            <option value="enfermedad">Enfermedad</option>
                             <option value="otro">📌 Otro</option>
                         </select>
                     </div>

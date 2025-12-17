@@ -180,7 +180,7 @@ addBreadcrumb('Nueva Incidencia');
 
         <!-- Información del gato seleccionado -->
         <div class="gato-seleccionado">
-            <h3>🐱 Gato Seleccionado</h3>
+            <h3>Gato Seleccionado</h3>
             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($gato['nombre']); ?></p>
             <p><strong>XIP:</strong> <?php echo $gato['numXIP'] ? htmlspecialchars($gato['numXIP']) : 'Sin XIP'; ?></p>
             <?php if ($gato['sexo']): ?>
@@ -200,9 +200,9 @@ addBreadcrumb('Nueva Incidencia');
                 <select name="tipo" id="tipo" required>
                     <option value="">-- Selecciona un tipo --</option>
                     <option value="salud">🏥 Problema de salud</option>
-                    <option value="herido">🩹 Herida</option>
-                    <option value="fallecimiento">💀 Fallecimiento</option>
-                    <option value="enfermedad">🦠 Enfermedad</option>
+                    <option value="herido">Herida</option>
+                    <option value="fallecimiento">Fallecimiento</option>
+                    <option value="enfermedad">Enfermedad</option>
                     <option value="otro">📌 Otro</option>
                 </select>
             </div>
