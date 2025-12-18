@@ -32,6 +32,8 @@ $telefono = $_GET["telefono"];
 
 // Validar datos not null
 if (empty($ayuntamiento) || empty($nombre) || empty($apellido) || empty($usuario) || empty($contrasena) || empty($email) || empty($telefono)) {
+    //volver
+    echo'<p><button onclick="document.location=\'formulario_inscripcion.php\'">Volver</button></p>';
     die("Error: Todos los campos deben estar completos.");
 }
 
@@ -39,4 +41,16 @@ $con = mysqli_connect("localhost","root","");
 $db = mysqli_select_db($con,"bd2_prac2");
 
 $consulta=" call procedure_anyade_voluntario ('".$ayuntamiento."', '".$nombre."', '".$apellido."', '".$usuario."', '".$contrasena."', '".$email."', '".$telefono."') ";
-$resultat = mysqli_query($con, $consulta);
+
+
+try{
+    $resultat = mysqli_query($con, $consulta);
+     echo '<p>La operacion se ha realizado correctamente</p>';
+    //volver
+    echo'<p><button onclick="document.location=\'formulario_inscripcion.php\'">Volver</button></p>';
+}catch( \Throwable $error ){
+
+    echo '<p>La operacion no se ha podido realizar, es posible que el nombre de usuario ya exista</p>';
+    //volver
+    echo'<p><button onclick="document.location=\'formulario_inscripcion.php\'">Volver</button></p>';
+}

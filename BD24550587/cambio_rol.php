@@ -58,7 +58,7 @@ try{
     //volver
     echo'<p><button onclick="document.location=\'modifica_rol_persona.php?usuario='.$usuario.'\'">Volver</button></p>';
 }catch( \Throwable $error ){
-    echo $error;
+    //echo $error;
     $con->rollback(); 
     echo '<p>La operacion no se ha podido realizar</p>';
     //volver
