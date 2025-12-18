@@ -47,11 +47,10 @@ $consulta=" SELECT  t.descripcion, fecha, hora, estado, c.nombre as nombreColoni
                     m.caracteristicas as caracteristicasComida, m.idMarcaComida, m.pesoPorGato
             FROM TRABAJO t
             JOIN COLONIA_FELINA c ON c.idColonia = t.idColonia
-            JOIN MARCACOMIDA m ON m.idMarcaComida = t.idMarcaComida
+            LEFT JOIN MARCACOMIDA m ON m.idMarcaComida = t.idMarcaComida
             WHERE t.idTrabajo = ".$tarea."
 
             ";
-
 $resultat = mysqli_query($con, $consulta);
 
 $registre = mysqli_fetch_array($resultat);

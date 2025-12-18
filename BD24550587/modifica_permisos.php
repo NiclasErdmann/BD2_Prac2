@@ -39,14 +39,44 @@ echo
 </style>";
 
 //tite
-echo '<h1>Roles de los usuarios</h1>';
+echo '<h1>Roles y roles de usuarios</h1>';
+echo '<h2>Roles</h2>';
+// ver todos los roles
+$consulta=" SELECT r.nombre as rol
+                FROM Rol r
+            ";
 
+$resultat = mysqli_query($con, $consulta);
+
+$registre = mysqli_fetch_array($resultat);
+if(is_null($registre)){
+    // Querry error
+    $cad= 'Querry error';
+    echo $cad;
+}else{
+    // usuarios y sus roles
+    echo "<table>";
+        echo "<tr>";
+        
+        $cad='<th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>';
+        echo $cad;
+        echo "</tr>";
+    while ($registre=mysqli_fetch_array($resultat)) {
+        echo "<tr>";
+        
+        $cad='<th><a href="'.'modifica_permisos_rol.php?rol='.$registre["rol"].'"> '.$registre["rol"].' </a></th>';
+        echo $cad;
+        echo "</tr>";
+    }
+    echo "</table>";
+}
+
+echo '<h2>Roles de usuarios</h2>';
 // ver usuarios y sus roles
 $consulta=" SELECT p.usuario as usuario, r.nombre as rol
                 FROM PERSONA p
                 JOIN PER_ROL pr ON p.idPersona = pr.idPersona
                 JOIN ROL r ON pr.idRol = r.idRol
-
             ";
 
 $resultat = mysqli_query($con, $consulta);
@@ -73,6 +103,8 @@ if(is_null($registre)){
         echo $cad;
         echo "</tr>";
     }
+    echo "</table>";
 }
+
 mysqli_close($con);
 ?>
