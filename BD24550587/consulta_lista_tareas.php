@@ -15,6 +15,9 @@ if (!isset($_SESSION['idPersona'])) {
     die('Error: Debes iniciar sesión. <a href="../login.html">Ir al login</a>');
 }
 
+// Añadir breadcrumb
+addBreadcrumb('Lista_Tareas');
+displayBreadcrumbs();
 
 
 //style
