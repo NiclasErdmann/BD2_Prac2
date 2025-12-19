@@ -376,7 +376,6 @@ END//
 
 DELIMITER ;
 
-
 -- Datos base para el nuevo esquema
 
 INSERT INTO AYUNTAMIENTO (nombre) VALUES
@@ -460,7 +459,8 @@ INSERT INTO INCIDENCIA (fecha, descripcion, tipo, idVoluntario, idGato) VALUES
 INSERT INTO ROL (nombre) VALUES
     ('adminAyuntamiento'),
     ('responsableGrupo'),
-    ('voluntario');
+    ('voluntario'),
+    ('veterinario');
 
 INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Modificar Colonias', 'BD249482420/listar_colonias.html'),
@@ -473,12 +473,17 @@ INSERT INTO FUNCION (nombre, ruta) VALUES
     ('Albirament Gato', 'BD249772780/listar_gatos.php?modo=albirament'),
     ('Ver Gatos', 'BD249772780/listar_gatos.php?modo=ver'),
     ('Modificacion Permisos', 'BD24550587/modifica_permisos.php'),
-    ('Consulta Mis Tareas', 'BD24550587/consulta_lista_tareas.php');
+    ('Consulta Mis Tareas', 'BD24550587/consulta_lista_tareas.php'),
+    ('Registrar Gato', 'BD243468864/crear_gato.php'),
+    ('Mi Perfil', 'BD243468864/perfil.php'),
+    ('Campañas Veterinarias', 'BD243468864/listar_campanas.php'),
+    ('Editar Historial Médico', 'BD243468864/editar_historial.php'),
+    ('Crear Campaña Veterinaria', 'BD243468864/crear_campana.php');
 
 INSERT INTO PER_ROL (idPersona, idRol) VALUES
     (1, 1),
     (2, 2),
-    (3, 2),
+    (3, 4),
     (4, 2),
     (5, 2),
     (6, 3),
@@ -492,11 +497,13 @@ INSERT INTO PER_ROL (idPersona, idRol) VALUES
 
 INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
     -- adminAyuntamiento puede todo
-    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1,10), (1,11),
-    -- responsableGrupo puede ver y gestionar algunas cosas
-    (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9), (2,11),
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1,10), (1,11), (1, 12), (1,13), (1, 14),(1, 15), (1, 16),
+    -- responsableGrupo puede ver y gestionar algunas cosas y crear campañas veterinarias
+    (2, 2), (2, 4), (2, 6), (2, 7), (2, 8), (2, 9), (2,11), (2,13), (2,16),
     -- voluntario puede ver grupos, registrar incidencias, albiraments y ver gatos
-    (3, 4), (3, 6), (3, 8), (3, 9), (3,11);
+    (3, 4), (3, 6), (3, 8), (3, 9), (3,11), (3,13),
+    -- veterinario puede ver colonias, grupos, gatos y campañas veterinarias además de gestionar el historial médico
+    (4, 2), (4, 4), (4, 9), (4, 13), (4, 14), (4,15);
 
 INSERT INTO MARCACOMIDA (nombre, calidad, caracteristicas, pesoPorGato) VALUES
     ('CatPlus', 'Alta', 'Rica en proteínas', 100),
@@ -550,14 +557,3 @@ INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) VALUES
     ('2024-04-21', 5, 2),   -- Nieve vista en Parque
     ('2024-04-22', 6, 2),   -- Bigotes visto en Parque
     ('2024-04-23', 7, 2);   -- Sombra vista en Parque
-
-INSERT INTO FUNCION (nombre, ruta) VALUES ('Registrar Gato', 'BD243468864/crear_gato.php');
-
--- Autorizar al Administrador (Rol 1)
-INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (1, 12);
-
--- Autorizar al Responsable de Grupo (Rol 2)
-INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (2, 12);
-
--- Autorizar al Voluntario común (Rol 3)
-INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES (3, 12);
