@@ -10,7 +10,7 @@ $comentario = $_GET["comentario"];
 $tarea = $_GET["tarea"];
 
 $con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
+$db = mysqli_select_db($con,"BD201");
 
 $consulta="
         UPDATE TRABAJO t

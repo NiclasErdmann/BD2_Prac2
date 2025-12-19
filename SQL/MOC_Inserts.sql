@@ -84,7 +84,7 @@ INSERT INTO ROL (nombre) VALUES
     ('voluntario');
 
 INSERT INTO FUNCION (nombre, ruta) VALUES
-    ('Modificar Colonias', 'BD249482420/crearColonia.html'),
+    ('Modificar Colonias', 'BD249482420/listar_colonias.html'),
     ('Ver Colonias', 'BD249482420/listar_colonias.html'),
     ('Gestionar Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
@@ -137,6 +137,7 @@ INSERT INTO TRABAJO (descripcion, fecha, hora, estado, comentario, idMarcaComida
     ('Alimentación diaria', '2024-04-17', '08:00:00', 'pendiente', NULL, 1, 1, 1),
     ('Alimentación diaria', '2024-04-18', '08:00:00', 'pendiente', NULL, 1, 1, 1),
     ('Alimentación diaria', '2024-04-18', '16:00:00', 'pendiente', NULL, 1, 1, 1),
+    ('Check garfield', '2024-04-18', '16:00:00', 'pendiente', NULL, NULL, 1, 1),
     ('Revisión zona parque', '2024-04-16', '10:30:00', 'completado', NULL, NULL, 2, 2),
     ('Limpieza comederos', '2024-04-17', '09:00:00', 'completado', NULL, NULL, 1, 3),
     ('Alimentación nocturna', '2024-04-17', '20:00:00', 'completado', "era de noche", 2, 2, 4),

@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -562,8 +562,6 @@ addBreadcrumb('Gestión de Voluntarios');
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="ficha_voluntario.php?id=<?php echo $vol['idPersona']; ?>" class="btn-action" title="Ver">Ver</a>
-                                        
                                         <?php if ($vol['estado'] === 'Disponible'): ?>
                                             <a href="voluntario_accion.php?accion=asignar&idPersona=<?php echo $vol['idPersona']; ?>" class="btn-action verde" title="Asignar">Asignar</a>
                                         <?php else: ?>

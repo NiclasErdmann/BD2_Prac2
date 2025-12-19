@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -14,6 +14,11 @@ if (!$con) {
 if (!isset($_SESSION['idPersona'])) {
     die('Error: Debes iniciar sesión. <a href="../login.html">Ir al login</a>');
 }
+
+// Añadir breadcrumb
+addBreadcrumb('Modifica_Permisos_Rol');
+displayBreadcrumbs();
+
 
 //style
 echo 

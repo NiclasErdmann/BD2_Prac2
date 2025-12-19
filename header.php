@@ -1,6 +1,11 @@
 <?php
 // header.php - Cabecera común con breadcrumbs
 
+// Asegurar que la sesión esté iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Inicializar el historial de navegación si no existe
 if (!isset($_SESSION['breadcrumbs'])) {
     $_SESSION['breadcrumbs'] = [];
@@ -9,17 +14,33 @@ if (!isset($_SESSION['breadcrumbs'])) {
 // Verificar si se está navegando desde un breadcrumb
 if (isset($_GET['breadcrumb_index'])) {
     $index = (int)$_GET['breadcrumb_index'];
-    // Eliminar todos los breadcrumbs después del seleccionado
-    $_SESSION['breadcrumbs'] = array_slice($_SESSION['breadcrumbs'], 0, $index);
-    
-    // Redirigir a la URL sin el parámetro breadcrumb_index
-    $url = $_SERVER['PHP_SELF'];
-    $query = $_GET;
-    unset($query['breadcrumb_index']);
-    if (!empty($query)) {
-        $url .= '?' . http_build_query($query);
+
+    // Proteger valor mínimo
+    if ($index < 1) {
+        $index = 1;
     }
-    header("Location: $url");
+
+    // Recortar breadcrumbs para dejar como último el seleccionado
+    $_SESSION['breadcrumbs'] = array_slice($_SESSION['breadcrumbs'], 0, $index);
+
+    // Redirigir a la URL del breadcrumb seleccionado (el último tras el slice)
+    $target = end($_SESSION['breadcrumbs']);
+    $targetUrl = isset($target['url']) ? $target['url'] : $_SERVER['PHP_SELF'];
+
+    // Asegurarnos de quitar el parámetro breadcrumb_index si quedó en la URL de destino
+    $parsed = parse_url($targetUrl);
+    $base = $parsed['path'] ?? $targetUrl;
+    $params = [];
+    if (!empty($parsed['query'])) {
+        parse_str($parsed['query'], $params);
+        unset($params['breadcrumb_index']);
+    }
+    $redirectUrl = $base;
+    if (!empty($params)) {
+        $redirectUrl .= '?' . http_build_query($params);
+    }
+
+    header("Location: $redirectUrl");
     exit;
 }
 

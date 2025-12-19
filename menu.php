@@ -13,12 +13,12 @@ require_once 'header.php';
 // Resetear breadcrumbs en el menú principal
 resetBreadcrumbs();
 
-// Añadir breadcrumb del menú con ruta dinámica
+// Añadir breadcrumb del menú con ruta correcta basada en el directorio del script
 $scriptPath = $_SERVER['SCRIPT_NAME'];
-$projectBase = substr($scriptPath, 0, strpos($scriptPath, 'BD2_Prac2') + 9);
+$projectBase = rtrim(dirname($scriptPath), '/\\'); // ej: '/BD201'
 addBreadcrumb('Menú Principal', $projectBase . '/menu.php');
 
-$con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
+$con = mysqli_connect('localhost', 'root', '', 'BD201');
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }

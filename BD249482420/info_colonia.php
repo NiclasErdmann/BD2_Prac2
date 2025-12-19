@@ -29,7 +29,7 @@ if ($id <= 0) {
 }
 
 // Conexión a BD
-$con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
+$con = mysqli_connect('localhost', 'root', '', 'BD201');
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }

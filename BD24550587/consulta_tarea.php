@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -14,6 +14,11 @@ if (!$con) {
 if (!isset($_SESSION['idPersona'])) {
     die('Error: Debes iniciar sesión. <a href="../login.html">Ir al login</a>');
 }
+
+// Añadir breadcrumb
+addBreadcrumb('Tarea');
+displayBreadcrumbs();
+
 
 //style
 echo 
@@ -42,11 +47,10 @@ $consulta=" SELECT  t.descripcion, fecha, hora, estado, c.nombre as nombreColoni
                     m.caracteristicas as caracteristicasComida, m.idMarcaComida, m.pesoPorGato
             FROM TRABAJO t
             JOIN COLONIA_FELINA c ON c.idColonia = t.idColonia
-            JOIN MARCACOMIDA m ON m.idMarcaComida = t.idMarcaComida
+            LEFT JOIN MARCACOMIDA m ON m.idMarcaComida = t.idMarcaComida
             WHERE t.idTrabajo = ".$tarea."
 
             ";
-
 $resultat = mysqli_query($con, $consulta);
 
 $registre = mysqli_fetch_array($resultat);

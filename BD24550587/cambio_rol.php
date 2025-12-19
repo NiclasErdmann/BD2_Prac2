@@ -35,28 +35,34 @@ echo
 </style>";
 
 
-$rol= $_GET["rol"];
-$idRol= $_GET["idRol"];
-$idFunc= $_GET["funcion"];
+$nuevo_idRol= $_GET["nuevo_idRol"];
+$viejo_idRol= $_GET["viejo_idRol"];
+$idPersona= $_GET["idPersona"];
+$usuario= $_GET["usuario"];
 
-
-// funciones que se anyade al rol
-$consulta=' INSERT INTO PUEDEHACER (idRol, idFuncion) VALUES
-            ('.$idRol.','.$idFunc.');
+// cambio de rol a $idRol de la persona $idPersona
+$consulta1=' DELETE FROM PER_ROL
+                WHERE idRol ='.$viejo_idRol.';
             ';
+$consulta2=' INSERT INTO PER_ROL (idPersona, idRol) VALUES
+                ('.$idPersona.','.$nuevo_idRol.');
+            ';
+//echo $consulta;
 //transaction
 try{
     $con->begin_transaction();
-    $resultat = mysqli_query($con, $consulta);
+    $resultat = mysqli_query($con, $consulta1);
+    $resultat = mysqli_query($con, $consulta2);
     $con->commit();
     echo '<p>La operacion se ha realizado correctamente</p>';
     //volver
-    echo'<p><button onclick="document.location=\'modifica_permisos_rol.php?rol='.$rol.'\'">Volver</button></p>';
+    echo'<p><button onclick="document.location=\'modifica_rol_persona.php?usuario='.$usuario.'\'">Volver</button></p>';
 }catch( \Throwable $error ){
+    //echo $error;
     $con->rollback(); 
     echo '<p>La operacion no se ha podido realizar</p>';
     //volver
-    echo'<p><button onclick="document.location=\'modifica_permisos_rol.php?rol='.$rol.'\'">Volver</button></p>';
+    echo'<p><button onclick="document.location=\'modifica_rol_persona.php?usuario='.$usuario.'\'">Volver</button></p>';
 }
 
 mysqli_close($con);

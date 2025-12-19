@@ -2,7 +2,7 @@
 session_start();
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -73,22 +73,34 @@ $fechaActual = strtotime($fechaInicio);
 $fechaFinTimestamp = strtotime($fechaFin);
 $trabajosCreados = 0;
 
-while ($fechaActual <= $fechaFinTimestamp) {
-    $fechaStr = date('Y-m-d', $fechaActual);
+try {
+    // Iniciar transacción
+    $con->begin_transaction();
     
-    $sql = "INSERT INTO TRABAJO (descripcion, fecha, hora, estado, comentario, idMarcaComida, idColonia, idVoluntario) 
-            VALUES ($descripcion, '$fechaStr', '$hora', 'pendiente', NULL, $idMarcaComida, $idColonia, $idVoluntario)";
-    
-    if (!mysqli_query($con, $sql)) {
-        header('Location: planificar_trabajo.php?error=' . urlencode('Error al crear trabajos: ' . mysqli_error($con)));
-        mysqli_close($con);
-        exit();
+    while ($fechaActual <= $fechaFinTimestamp) {
+        $fechaStr = date('Y-m-d', $fechaActual);
+        
+        $sql = "INSERT INTO TRABAJO (descripcion, fecha, hora, estado, comentario, idMarcaComida, idColonia, idVoluntario) 
+                VALUES ($descripcion, '$fechaStr', '$hora', 'pendiente', NULL, $idMarcaComida, $idColonia, $idVoluntario)";
+        
+        $resultado = mysqli_query($con, $sql);
+        if (!$resultado) {
+            throw new Exception(mysqli_error($con));
+        }
+        
+        $trabajosCreados++;
+        $fechaActual = strtotime('+1 day', $fechaActual);
     }
     
-    $trabajosCreados++;
-    $fechaActual = strtotime('+1 day', $fechaActual);
+    // Confirmar transacción
+    $con->commit();
+    mysqli_close($con);
+    header('Location: planificar_trabajo.php?exito=' . $trabajosCreados);
+    
+} catch (\Throwable $error) {
+    // Revertir cambios en caso de error
+    $con->rollback();
+    mysqli_close($con);
+    header('Location: planificar_trabajo.php?error=' . urlencode('Error al crear trabajos: ' . $error->getMessage()));
 }
-
-mysqli_close($con);
-header('Location: planificar_trabajo.php?exito=' . $trabajosCreados);
 ?>

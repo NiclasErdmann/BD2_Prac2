@@ -1,0 +1,228 @@
+/* Estilo Scribbr - Profesional, Limpio y Minimalista */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #2c2c2c;
+    line-height: 1.7;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+
+/* Botones */
+.btn {
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #5b9bd5;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4a8bc2;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: #5b9bd5;
+    border: 1px solid #5b9bd5;
+}
+
+.btn-secondary:hover {
+    background-color: #f8f9fa;
+}
+
+/* Formularios */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #5b9bd5;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+select {
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #4a4a4a;
+    font-size: 0.95rem;
+}
+
+/* Tarjetas */
+.card {
+    background-color: #ffffff;
+    padding: 28px 32px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Cajas de información */
+.info-box {
+    background-color: #f8f9fa;
+    border-left: 3px solid #5b9bd5;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-left: 3px solid #28a745;
+    color: #155724;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+    color: #856404;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border-left: 3px solid #dc3545;
+    color: #721c24;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #4a4a4a;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #2c2c2c;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Enlaces */
+a {
+    color: #5b9bd5;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #4a8bc2;
+    text-decoration: underline;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
