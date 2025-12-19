@@ -78,7 +78,8 @@ if ($guardar === '1') {
     $nombre = trim($_POST['nombre'] ?? '');
     $lugar = trim($_POST['lugarReferencia'] ?? '');
     $coordenadas = trim($_POST['coordenadas'] ?? '');
-    $numeroGatos = isset($_POST['numeroGatos']) ? (int)$_POST['numeroGatos'] : 0;
+    // Número de gatos se fuerza a 0; no editable desde el formulario
+    $numeroGatos = 0;
     $descripcion = trim($_POST['descripcion'] ?? '');
     $idGrupo = isset($_POST['idGrupo']) && $_POST['idGrupo'] !== '' ? (int)$_POST['idGrupo'] : null;
 
@@ -369,11 +370,6 @@ addBreadcrumb($accion === 'crear' ? 'Crear Colonia' : 'Editar Colonia');
                 <div class="form-group">
                     <label for="coordenadas">Coordenadas GPS</label>
                     <input id="coordenadas" name="coordenadas" type="text" value="<?php echo htmlspecialchars($colonia['coordenadas']); ?>" placeholder="40.7128, -74.0060">
-                </div>
-
-                <div class="form-group">
-                    <label for="numeroGatos">Número de Gatos (Estimado)</label>
-                    <input id="numeroGatos" name="numeroGatos" type="number" min="0" value="<?php echo (int)$colonia['numeroGatos']; ?>" placeholder="0">
                 </div>
 
                 <div class="form-group">
