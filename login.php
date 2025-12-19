@@ -57,6 +57,17 @@ if ($resAyu && mysqli_num_rows($resAyu) > 0) {
     $_SESSION['idAyuntamiento'] = null;
 }
 
+// 3) Obtener y guardar el ROL de cada persona
+$sqlRol = sprintf("SELECT idRol FROM PER_ROL WHERE idPersona = %d LIMIT 1", (int)$idPersona);
+$resRol = mysqli_query($con, $sqlRol);
+
+if ($resRol && mysqli_num_rows($resRol) > 0) {
+    $rowRol = mysqli_fetch_assoc($resRol);
+    $_SESSION['idRol'] = $rowRol['idRol'];
+} else {
+    $_SESSION['idRol'] = null;
+}
+
 // Redirigir al menú principal (menu.php) donde se muestran las funciones
 mysqli_close($con);
 header('Location: menu.php');

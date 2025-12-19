@@ -58,6 +58,15 @@ $sqlIncidencias = "SELECT i.fecha, i.tipo, i.descripcion,
 
 $resultIncidencias = mysqli_query($con, $sqlIncidencias);
 
+//Obtener opciones médicas
+$sqlMedico = "SELECT a.*, p.nombre as nombreVet 
+              FROM ACCION_INDIVIDUAL a
+              JOIN PROFESIONAL pr ON a.idProfesional = pr.idProfesional
+              JOIN PERSONA p ON pr.idPersona = p.idPersona
+              WHERE a.idGato = $idGato 
+              ORDER BY a.fecha DESC";
+$resultMedico = mysqli_query($con, $sqlMedico);
+
 // Añadir breadcrumb
 addBreadcrumb('Ficha de Gato: ' . $gato['nombre']);
 ?>
@@ -149,6 +158,16 @@ addBreadcrumb('Ficha de Gato: ' . $gato['nombre']);
             padding: 10px;
             text-align: left;
         }
+        .btn-editar-medico {
+            background-color: #ffc107;
+            color: black;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.9em;
+            border: 1px solid #333;
+        }
         table th {
             background-color: #f0f0f0;
             font-weight: bold;
@@ -232,6 +251,48 @@ addBreadcrumb('Ficha de Gato: ' . $gato['nombre']);
                     <?php endif; ?>
                 </div>
             </div>
+        </div>
+
+        <div class="seccion">
+            <h2>Historial Médico</h2>
+            <?php if (mysqli_num_rows($resultMedico) > 0): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Intervención / Descripción</th>
+                            <th>Veterinario</th>
+                            <?php if ($_SESSION['idRol'] == 4): // Solo visible para Veterinarios ?>
+                                <th>Acción</th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($med = mysqli_fetch_assoc($resultMedico)): ?>
+                            <tr>
+                                <td><?php echo date('d/m/Y', strtotime($med['fecha'])); ?></td>
+                                <td>
+                                    <?php echo htmlspecialchars($med['descripcion']); ?>
+                                    <?php if(!empty($med['autopsia'])): ?>
+                                        <br><small style="color:red;"><b>Autopsia:</b> <?php echo htmlspecialchars($med['autopsia']); ?></small>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo htmlspecialchars($med['nombreVet']); ?></td>
+                                <?php if (isset($_SESSION['idRol']) && $_SESSION['idRol'] == 4): ?>
+                                    <td>
+                                        <a href="../BD243468864/editar_historial.php?idAccion=<?php echo $med['idAccion']; ?>" 
+                                        class="btn-editar-medico">
+                                        Editar
+                                        </a>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No hay historial médico registrado para este gato.</p>
+            <?php endif; ?>
         </div>
 
         <!-- Historial de colonias -->

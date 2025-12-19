@@ -3,7 +3,7 @@ session_start();
 require_once '../header.php'; // Para usar los breadcrumbs
 
 // 1. Conexión a la base de datos
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
