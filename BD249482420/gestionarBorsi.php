@@ -562,8 +562,6 @@ addBreadcrumb('Gestión de Voluntarios');
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="ficha_voluntario.php?id=<?php echo $vol['idPersona']; ?>" class="btn-action" title="Ver">Ver</a>
-                                        
                                         <?php if ($vol['estado'] === 'Disponible'): ?>
                                             <a href="voluntario_accion.php?accion=asignar&idPersona=<?php echo $vol['idPersona']; ?>" class="btn-action verde" title="Asignar">Asignar</a>
                                         <?php else: ?>
