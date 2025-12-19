@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD201");
+$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
