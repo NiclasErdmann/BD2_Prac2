@@ -47,7 +47,7 @@ try{
     $resultat = mysqli_query($con, $consulta);
      echo '<p>La operacion se ha realizado correctamente</p>';
     //volver
-    echo'<p><button onclick="document.location=\'formulario_inscripcion.php\'">Volver</button></p>';
+    echo'<p><button onclick="document.location=\'../login.html\'">Ir al login</button></p>';
 }catch( \Throwable $error ){
 
     echo '<p>La operacion no se ha podido realizar, es posible que el nombre de usuario ya exista</p>';
