@@ -84,7 +84,7 @@ INSERT INTO ROL (nombre) VALUES
     ('voluntario');
 
 INSERT INTO FUNCION (nombre, ruta) VALUES
-    ('Modificar Colonias', 'BD249482420/crearColonia.html'),
+    ('Modificar Colonias', 'BD249482420/listar_colonias.html'),
     ('Ver Colonias', 'BD249482420/listar_colonias.html'),
     ('Gestionar Grupos', 'BD249482420/listar_grupoTrabajo.php'),
     ('Ver Grupos', 'BD249482420/listar_grupoTrabajo.php'),
