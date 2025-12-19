@@ -6,7 +6,7 @@ $user = $_GET['user'] ?? '';
 $pasword = $_GET['password'] ?? '';
 
 // Conexión a BD (ajusta usuario/contraseña si procede)
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }

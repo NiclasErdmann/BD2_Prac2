@@ -15,10 +15,10 @@ resetBreadcrumbs();
 
 // Añadir breadcrumb del menú con ruta dinámica
 $scriptPath = $_SERVER['SCRIPT_NAME'];
-$projectBase = substr($scriptPath, 0, strpos($scriptPath, 'BD2_Prac2') + 9);
+$projectBase = substr($scriptPath, 0, strpos($scriptPath, 'BD201') + 9);
 addBreadcrumb('Menú Principal', $projectBase . '/menu.php');
 
-$con = mysqli_connect('localhost', 'root', '', 'BD2_Prac2');
+$con = mysqli_connect('localhost', 'root', '', 'BD201');
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }

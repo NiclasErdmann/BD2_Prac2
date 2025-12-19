@@ -4,7 +4,7 @@ $user= $_GET["user"];
 $role= $_GET["role"];
 // preparar select per descarregar tots els privilegis de l usuari
 $con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
+$db = mysqli_select_db($con,"BD201");
 
 $consulta=" SELECT f.nombre as nombre
                 FROM PERSONA p

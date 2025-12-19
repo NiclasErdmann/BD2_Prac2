@@ -1,6 +1,6 @@
 <?php
 session_start();
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 
 if (!$con) { die("Error: " . mysqli_connect_error()); }
 

@@ -1,6 +1,6 @@
 <?php
 $con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
+$db = mysqli_select_db($con,"BD201");
 // seleccion ayuntamiento
 //nombre, apellido, usuario, contrasena, email, telefono
 $consulta=" SELECT a.nombre as ayuntamiento

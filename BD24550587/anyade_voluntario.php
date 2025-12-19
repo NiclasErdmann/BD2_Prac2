@@ -38,7 +38,7 @@ if (empty($ayuntamiento) || empty($nombre) || empty($apellido) || empty($usuario
 }
 
 $con = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($con,"bd2_prac2");
+$db = mysqli_select_db($con,"BD201");
 
 $consulta=" call procedure_anyade_voluntario ('".$ayuntamiento."', '".$nombre."', '".$apellido."', '".$usuario."', '".$contrasena."', '".$email."', '".$telefono."') ";
 

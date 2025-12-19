@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -67,112 +67,164 @@ addBreadcrumb('Nueva Incidencia');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Incidencia</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #2c2c2c;
+            line-height: 1.7;
+            padding: 0;
+        }
+        
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 50px 40px;
         }
+        
         h1 {
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
+        
         .subtitle {
+            font-size: 1.125rem;
             color: #666;
-            margin-bottom: 30px;
+            font-weight: 400;
+            margin-bottom: 40px;
         }
+        
         .form-paso {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #f0f7ff;
+            padding: 28px 32px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+            border-left: 4px solid #5b9bd5;
         }
+        
         .form-paso h3 {
             margin-top: 0;
-            color: #0066cc;
-        }
-        .form-group {
+            color: #2c5282;
+            font-size: 1.3rem;
+            font-weight: 600;
             margin-bottom: 20px;
         }
+        
+        .form-group {
+            margin-bottom: 32px;
+        }
+        
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #4a4a4a;
+            font-size: 0.95rem;
         }
+        
         label .required {
             color: #dc3545;
         }
+        
         input[type="text"],
         textarea,
         select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 14px 16px;
+            border: 1px solid #d0d0d0;
             border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
         }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #5b9bd5;
+        }
+        
         textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 120px;
+            line-height: 1.6;
         }
+        
         select {
             cursor: pointer;
         }
+        
         .btn-submit {
-            background-color: #28a745;
+            background-color: #5b9bd5;
             color: white;
-            padding: 12px 30px;
+            padding: 14px 36px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
+        
         .btn-submit:hover {
-            background-color: #218838;
+            background-color: #4a8bc2;
         }
+        
         .btn-submit:disabled {
-            background-color: #6c757d;
+            background-color: #d0d0d0;
             cursor: not-allowed;
         }
+        
         .btn-cancelar {
             display: inline-block;
-            margin-left: 10px;
-            color: #007bff;
+            margin-left: 16px;
+            color: #5b9bd5;
             text-decoration: none;
-            padding: 12px 20px;
+            padding: 14px 24px;
+            font-weight: 500;
+            transition: color 0.2s;
         }
+        
         .btn-cancelar:hover {
+            color: #4a8bc2;
             text-decoration: underline;
         }
+        
         .info-box {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 12px;
-            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #5b9bd5;
+            padding: 20px 24px;
+            margin-bottom: 32px;
             border-radius: 4px;
         }
+        
         .info-box p {
-            margin: 5px 0;
-            color: #856404;
+            margin: 8px 0;
+            color: #4a4a4a;
+            line-height: 1.7;
         }
+        
+        .info-box strong {
+            color: #2c2c2c;
+        }
+        
         .paso-info {
-            background-color: #d1ecf1;
-            border-left: 4px solid #0c5460;
-            padding: 10px;
-            margin-bottom: 15px;
+            background-color: #f0f7ff;
+            border-left: 3px solid #5b9bd5;
+            padding: 16px 20px;
+            margin-bottom: 24px;
             border-radius: 4px;
-            color: #0c5460;
+            color: #2c5282;
+            font-weight: 500;
         }
     </style>
 </head>

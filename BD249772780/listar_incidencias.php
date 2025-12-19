@@ -5,7 +5,7 @@ session_start();
 require_once '../header.php';
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -33,10 +33,9 @@ if (!$datosVol) {
 $idVoluntario = $datosVol['idVoluntario'];
 
 // Obtener datos completos del voluntario
-$sqlVolInfo = "SELECT p.nombre, p.apellido, g.nombre as nombreGrupo
+$sqlVolInfo = "SELECT p.nombre, p.apellido
                FROM VOLUNTARIO v
                INNER JOIN PERSONA p ON v.idPersona = p.idPersona
-               LEFT JOIN GRUPO_TRABAJO g ON v.idGrupoTrabajo = g.idGrupoTrabajo
                WHERE v.idVoluntario = ?";
 $stmtVolInfo = mysqli_prepare($con, $sqlVolInfo);
 mysqli_stmt_bind_param($stmtVolInfo, "i", $idVoluntario);
@@ -108,132 +107,189 @@ addBreadcrumb('Mis Incidencias');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Incidencias</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #2c2c2c;
+            line-height: 1.7;
+            padding: 0;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 50px 30px;
         }
+        
         h1 {
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
+        
         .subtitle {
+            font-size: 1.125rem;
             color: #666;
-            margin-bottom: 20px;
+            font-weight: 400;
+            margin-bottom: 32px;
         }
+        
         .info-voluntario {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #f0f7ff;
+            padding: 20px 28px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+            border-left: 4px solid #5b9bd5;
         }
+        
         .info-voluntario p {
-            margin: 5px 0;
-            color: #0066cc;
+            margin: 8px 0;
+            color: #2c5282;
+            font-size: 1rem;
         }
+        
+        .info-voluntario strong {
+            color: #1a4d7a;
+        }
+        
         .kpi-container {
             display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 24px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
+        
         .kpi-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 28px 32px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
             flex: 1;
             min-width: 200px;
+            transition: box-shadow 0.2s;
         }
+        
+        .kpi-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
         .kpi-card h3 {
-            margin: 0 0 10px 0;
-            color: #666;
-            font-size: 14px;
-            font-weight: normal;
+            margin: 0 0 12px 0;
+            color: #4a4a4a;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        
         .kpi-card .value {
-            font-size: 36px;
-            font-weight: bold;
-            color: #007bff;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #5b9bd5;
             margin: 0;
         }
+        
         .btn-nueva {
             display: inline-block;
-            background-color: #28a745;
+            background-color: #5b9bd5;
             color: white;
-            padding: 12px 24px;
+            padding: 14px 32px;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            font-size: 1rem;
+            transition: background-color 0.2s;
         }
+        
         .btn-nueva:hover {
-            background-color: #218838;
+            background-color: #4a8bc2;
+        }
+            background-color: #4a8bc2;
         }
         .filtros-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 32px;
         }
         .filtros-container h3 {
             margin-top: 0;
-            color: #333;
+            color: #1a1a1a;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 24px;
         }
         .filtro-grupo {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
             align-items: flex-end;
         }
         .filtro-item {
             flex: 1;
-            min-width: 150px;
+            min-width: 180px;
         }
         .filtro-item label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4a4a4a;
+            font-weight: 500;
+            font-size: 0.9rem;
         }
         .filtro-item select,
         .filtro-item input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
+            padding: 12px 16px;
+            border: 1px solid #d0d0d0;
             border-radius: 4px;
-            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        .filtro-item select:focus,
+        .filtro-item input:focus {
+            outline: none;
+            border-color: #5b9bd5;
         }
         .btn-filtrar {
-            padding: 8px 20px;
-            background-color: #007bff;
+            padding: 12px 28px;
+            background-color: #5b9bd5;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
         }
         .btn-filtrar:hover {
-            background-color: #0056b3;
+            background-color: #4a8bc2;
         }
         .btn-limpiar {
-            padding: 8px 20px;
-            background-color: #6c757d;
-            color: white;
+            padding: 12px 28px;
+            background-color: #ffffff;
+            color: #5b9bd5;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid #5b9bd5;
+            transition: all 0.2s;
         }
         .btn-limpiar:hover {
-            background-color: #5a6268;
+            background-color: #f8f9fa;
         }
         .tabla-container {
             background-color: white;
@@ -317,9 +373,6 @@ addBreadcrumb('Mis Incidencias');
 
         <div class="info-voluntario">
             <p><strong>Voluntario:</strong> <?php echo htmlspecialchars($datosVol['nombre'] . ' ' . $datosVol['apellido']); ?></p>
-            <?php if ($datosVol['nombreGrupo']): ?>
-                <p><strong>Grupo:</strong> <?php echo htmlspecialchars($datosVol['nombreGrupo']); ?></p>
-            <?php endif; ?>
         </div>
 
         <div class="kpi-container">

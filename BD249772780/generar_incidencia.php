@@ -26,27 +26,26 @@ if (empty($descripcion) || empty($tipo) || empty($idGato)) {
 
 // Insertar en la base de datos
 $sql = "INSERT INTO INCIDENCIA (fecha, descripcion, tipo, idVoluntario, idGato)
-        VALUES (?, ?, ?, ?, ?)";
+        VALUES ('$fecha', '$descripcion', '$tipo', $idVoluntario, $idGato)";
 
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Error en la preparación: " . $conn->error);
-}
-
-$stmt->bind_param("sssii", $fecha, $descripcion, $tipo, $idVoluntario, $idGato);
-
-if ($stmt->execute()) {
-    echo "<h2>✓ Incidencia registrada correctamente</h2>";
-    echo "<p>ID de incidencia: " . $stmt->insert_id . "</p>";
+try {
+    $resultado = mysqli_query($conn, $sql);
+    if (!$resultado) {
+        throw new Exception(mysqli_error($conn));
+    }
+    
+    $idIncidencia = mysqli_insert_id($conn);
+    
+    echo "<h2>Incidencia registrada correctamente</h2>";
+    echo "<p>ID de incidencia: " . $idIncidencia . "</p>";
     echo "<p><a href='incidencias_nueva.php'>Registrar otra incidencia</a></p>";
     echo "<p><a href='incidencias_listar.php'>Ver todas las incidencias</a></p>";
-} else {
-    echo "<h2>✗ Error al registrar la incidencia</h2>";
-    echo "<p>Detalles: " . $stmt->error . "</p>";
+    
+} catch (\Throwable $error) {
+    echo "<h2>Error al registrar la incidencia</h2>";
+    echo "<p>Detalles: " . $error->getMessage() . "</p>";
     echo "<p><a href='incidencias_nueva.php'>Volver al formulario</a></p>";
 }
 
-$stmt->close();
 $conn->close();
 ?>

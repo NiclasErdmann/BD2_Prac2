@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../header.php'; // Para mantener los breadcrumbs
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 
 // Necesitamos las colonias para que el usuario elija dónde vive el gato
 $sqlColonias = "SELECT idColonia, nombre FROM COLONIA_FELINA ORDER BY nombre";

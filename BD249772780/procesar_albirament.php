@@ -12,7 +12,7 @@ if (!isset($_SESSION['idPersona'])) {
 }
 
 // Conexión a BD
-$con = mysqli_connect("localhost", "root", "", "BD2_Prac2");
+$con = mysqli_connect("localhost", "root", "", "BD201");
 if (!$con) {
     die('Error de conexión: ' . mysqli_connect_error());
 }
@@ -37,12 +37,25 @@ $fechaActual = date('Y-m-d');
 $sqlAlbirament = "INSERT INTO ALBIRAMENT (fechaVista, idGato, idColonia) 
                  VALUES ('$fechaActual', $idGato, $idColoniaNueva)";
 
-if (mysqli_query($con, $sqlAlbirament)) {
+try {
+    // Iniciar transacción
+    $con->begin_transaction();
+    
+    $resultado = mysqli_query($con, $sqlAlbirament);
+    if (!$resultado) {
+        throw new Exception(mysqli_error($con));
+    }
+    
+    // Confirmar transacción
+    $con->commit();
     mysqli_close($con);
     header('Location: listar_gatos.php?modo=albirament&success=1');
     exit;
-} else {
+    
+} catch (\Throwable $error) {
+    // Revertir cambios en caso de error
+    $con->rollback();
     mysqli_close($con);
-    die("Error al registrar el albirament: " . mysqli_error($con) . " <br><a href='albirament_gato.php'>Volver</a>");
+    die("Error al registrar el albirament: " . $error->getMessage() . " <br><a href='albirament_gato.php'>Volver</a>");
 }
 ?>
